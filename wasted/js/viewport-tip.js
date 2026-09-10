@@ -13,10 +13,12 @@
   var dialog = document.getElementById("viewport-tip");
   if (!dialog || typeof dialog.showModal !== "function") return;
 
-  // A mouse and a wide window. Device emulation reports a coarse pointer and a
-  // narrow width, so entering it closes the dialog on its own, which doubles as
+  // Ask whether the machine has a mouse, not how wide the window is. A laptop
+  // with the window at 900px is still a computer, and that is exactly when the
+  // notice matters most. Device emulation reports a coarse pointer and no
+  // hover, so entering it closes the dialog on its own, which doubles as
   // confirmation that the reader did it right.
-  var isDesktop = window.matchMedia("(min-width: 992px) and (pointer: fine)");
+  var isDesktop = window.matchMedia("(hover: hover) and (pointer: fine)");
   var dismissed = false;
 
   function sync() {

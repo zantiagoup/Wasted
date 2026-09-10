@@ -80,9 +80,10 @@ device emulation so the reviewer sees the phone layout the app ships with. It is
 only: `wasted/js/viewport-tip.js` is the only script in the project and it touches nothing else.
 
 It uses a native `<dialog>`, so the focus trap, the Esc key and the inert background come from
-the browser. The trigger is `(min-width: 992px) and (pointer: fine)`; device emulation reports a
-coarse pointer and a narrow width, so entering it closes the dialog on its own, which doubles as
-confirmation that it worked.
+the browser. The trigger is `(hover: hover) and (pointer: fine)`, which asks whether the machine
+has a mouse rather than how wide the window is: a laptop with the window at 900px is still a
+computer. Device emulation reports a coarse pointer and no hover, so entering it closes the
+dialog on its own, which doubles as confirmation that it worked.
 
 ### What is not wired up yet
 
