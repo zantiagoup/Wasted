@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wasted — nav variants lab</title>
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=satoshi@400,500,700&display=swap">
+  <style>
+    :root {
+      --forest: #132a13;
+      --pine: #31572c;
+      --moss: #4f772d;
+      --sage: #90a955;
+      --lime: #ecf39e;
+      --paper: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #f2f2f0;
+      font-family: "Satoshi", system-ui, sans-serif;
+      color: #132a13;
+    }
+
+    h1 {
+      margin: 0 0 4px;
+      font-size: 20px;
+      letter-spacing: -0.03em;
+    }
+
+    p.lede {
+      max-width: 60ch;
+      margin: 0 0 28px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #31572c;
+    }
+
+    h2 {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin: 0 0 6px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    h2 small {
+      font-weight: 400;
+      color: #4f772d;
+    }
+
+    h2 b {
+      margin-left: auto;
+      font-variant-numeric: tabular-nums;
+      font-size: 12px;
+      font-weight: 500;
+      color: #4f772d;
+    }
+
+    .pair {
+      width: 285px;
+      margin: 0 0 26px;
+      background: #fff;
+      box-shadow: 0 0 0 1px rgba(19, 42, 19, 0.12);
+    }
+
+    .pair img {
+      display: block;
+      width: 285px;
+      height: 107px;
+    }
+
+    .pair .tag {
+      padding: 3px 8px;
+      background: #ecf39e;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 26px;
+    }
+
+    .zoom {
+      width: 570px;
+      overflow: hidden;
+    }
+
+    .zoom > * {
+      transform: scale(2);
+      transform-origin: 0 0;
+    }
+
+    .zoom {
+      height: 216px;
+    }
+
+    /* The stage matches the reference crop exactly: 285x108 CSS px, which is
+       570x216 at DPR 2. Every element is absolutely positioned at the
+       coordinates measured off the reference PNG, so a render of this stage can
+       be diffed against it pixel for pixel. */
+    .stage {
+      position: relative;
+      width: 285px;
+      height: 108px;
+      background: var(--paper);
+      isolation: isolate;
+    }
+
+    .pill {
+      position: absolute;
+      left: 13px;
+      top: 27.75px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      width: 177.5px;
+      height: 66px;
+      padding: 7px;
+      border-radius: 999px;
+      box-sizing: border-box;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      height: 52px;
+      padding: 0 17px;
+      border-radius: 999px;
+      color: var(--forest);
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1;
+      text-decoration: none;
+    }
+
+    .item--on {
+      background: var(--lime);
+    }
+
+    /* Measured off the reference: 14px side padding, 11px icon-to-label gap.
+       V0 keeps 17/9, which is what the app ships today. */
+    .v1 .item, .v2 .item, .v3 .item, .v4 .item, .v5 .item {
+      gap: 11px;
+      padding: 0 14px;
+    }
+
+    .fab {
+      position: absolute;
+      left: 201px;
+      top: 26.75px;
+      display: grid;
+      place-items: center;
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      color: var(--lime);
+    }
+
+    .i {
+      width: 22px;
+      height: 22px;
+      flex: none;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .fab .i {
+      position: relative;
+      z-index: 1;
+      width: 28px;
+      height: 28px;
+    }
+
+    /* ====================================================================
+       V0 — what the app ships today.
+       ==================================================================== */
+    .v0 .pill {
+      background: var(--paper);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 18px 34px -16px rgba(19, 42, 19, 0.42),
+        0 2px 6px -2px rgba(19, 42, 19, 0.18);
+    }
+
+    .v0 .fab {
+      position: absolute;
+      background: radial-gradient(circle at 34% 27%, #4f772d 0%, #31572c 45%, #132a13 100%);
+      box-shadow: 0 1.5px 1px rgba(236, 243, 158, 0.35) inset, 0 -12px 20px -10px rgba(0, 0, 0, 0.85) inset,
+        0 16px 28px -12px rgba(19, 42, 19, 0.62), 0 4px 8px -3px rgba(19, 42, 19, 0.45);
+    }
+
+    .v0 .fab::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at 32% 24%, rgba(236, 243, 158, 0.42) 0%, rgba(236, 243, 158, 0) 44%);
+    }
+
+    /* ====================================================================
+       V1 — direct fit. Numbers come straight off the reference:
+       the light peak sits at 29% 25% and reads --sage; the far side runs past
+       --forest into near-black; the top rim carries a 30% --lime band.
+       ==================================================================== */
+    .v1 .pill {
+      background: var(--paper);
+      box-shadow: 0 18px 34px -16px rgba(19, 42, 19, 0.42), 0 2px 6px -2px rgba(19, 42, 19, 0.18);
+    }
+
+    .v1 .fab {
+      background: radial-gradient(circle 70px at 29% 25%, #8da261 0%, #799054 17%, #587240 32%, #3a5630 46%,
+          #2e4426 60%, #1b2a17 75%, #14200f 100%);
+      box-shadow: inset 0 1.5px 2px rgba(236, 243, 158, 0.36), inset 0 -1.5px 2px rgba(0, 0, 0, 0.22),
+        0 16px 28px -12px rgba(19, 42, 19, 0.62), 0 4px 8px -3px rgba(19, 42, 19, 0.45);
+    }
+
+    /* ====================================================================
+       V2 — V1 plus the contact edge. A tight, almost unblurred layer under the
+       bottom edge is what reads as a "border stroke" in the reference; it is a
+       shadow, not a border.
+       ==================================================================== */
+    .v2 .pill {
+      background: var(--paper);
+      box-shadow: inset 0 0 0 0.5px rgba(19, 42, 19, 0.07), 0 18px 34px -16px rgba(19, 42, 19, 0.42), 0 2px 6px -2px rgba(19, 42, 19, 0.18);
+    }
+
+    .v2 .fab {
+      background: radial-gradient(ellipse 54px 50px at 33% 25%, #93a765 0%, #889d5d 10%, #7a9155 20%,
+          #667e48 32%, #526c3d 44%, #3b5630 56%, #334c2b 68%, #293e23 80%, #20311b 92%, #182513 100%);
+      box-shadow: inset 0 1.5px 2px rgba(236, 243, 158, 0.36), inset 0 -1.5px 2px rgba(0, 0, 0, 0.22),
+        inset 0 0 0 0.5px rgba(19, 42, 19, 0.35), 0 16px 28px -12px rgba(19, 42, 19, 0.62), 0 4px 8px -3px rgba(19, 42, 19, 0.45);
+    }
+
+    /* ====================================================================
+       V3 — V2's shadows, but the sphere's light is split in two layers: a flat
+       green ramp underneath and a separate soft specular on ::after. Reads
+       subtler because the highlight can be positioned without dragging the
+       whole ramp with it.
+       ==================================================================== */
+    .v3 .pill {
+      background: var(--paper);
+      box-shadow: 0 18px 34px -16px rgba(19, 42, 19, 0.42), 0 2px 6px -2px rgba(19, 42, 19, 0.18);
+    }
+
+    .v3 .fab {
+      background: radial-gradient(ellipse 54px 50px at 33% 25%, #93a765 0%, #6e864d 27%, #4a6539 48%,
+          #2f4628 73%, #182513 100%);
+      box-shadow: inset 0 1.5px 2px rgba(236, 243, 158, 0.36), inset 0 -1.5px 2px rgba(0, 0, 0, 0.22),
+        0 16px 28px -12px rgba(19, 42, 19, 0.62), 0 4px 8px -3px rgba(19, 42, 19, 0.45);
+    }
+
+    /* ====================================================================
+       V4 — actual Liquid Glass, for comparison. Translucent fill, backdrop
+       blur, a light top edge and a hairline ring. On a white page there is
+       nothing behind it to refract, so it mostly reads as a lighter pill.
+       ==================================================================== */
+    .v4 .stage {
+      background: linear-gradient(120deg, #ffffff 0%, #ffffff 55%, #ecf39e 100%);
+    }
+
+    .v4 .pill {
+      background: rgba(255, 255, 255, 0.55);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      backdrop-filter: blur(18px) saturate(180%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), inset 0 0 0 1px rgba(255, 255, 255, 0.5),
+        0 18px 34px -16px rgba(19, 42, 19, 0.42), 0 2px 6px -2px rgba(19, 42, 19, 0.18);
+    }
+
+    .v4 .item--on {
+      background: rgba(236, 243, 158, 0.85);
+    }
+
+    .v4 .fab {
+      background: radial-gradient(ellipse 54px 50px at 33% 25%, #93a765 0%, #889d5d 10%, #7a9155 20%,
+          #667e48 32%, #526c3d 44%, #3b5630 56%, #334c2b 68%, #293e23 80%, #20311b 92%, #182513 100%);
+      box-shadow: inset 0 1.5px 2px rgba(236, 243, 158, 0.4), inset 0 -1.5px 2px rgba(0, 0, 0, 0.22),
+        inset 0 0 0 1px rgba(236, 243, 158, 0.14), 0 16px 28px -12px rgba(19, 42, 19, 0.62), 0 4px 8px -3px rgba(19, 42, 19, 0.45);
+    }
+
+    /* ====================================================================
+       V5 — the candidate: V0's shadows (they already match the reference to
+       within 3/255) plus V1's fitted sphere ramp and the measured geometry.
+       ==================================================================== */
+    .v5 .pill {
+      background: var(--paper);
+      box-shadow: 0 18px 34px -16px rgba(19, 42, 19, 0.42), 0 2px 6px -2px rgba(19, 42, 19, 0.18);
+    }
+
+    .v5 .fab {
+      /* The ten stops are the mean colour of ten concentric rings sampled off
+         the reference; the ellipse geometry is the least-squares best fit. */
+      background: radial-gradient(ellipse 54px 50px at 33% 25%, #93a765 0%, #889d5d 10%, #7a9155 20%,
+          #667e48 32%, #526c3d 44%, #3b5630 56%, #334c2b 68%, #293e23 80%, #20311b 92%, #182513 100%);
+      box-shadow: inset 0 1px 2px rgba(236, 243, 158, 0.55), inset 0 -4px 8px rgba(0, 0, 0, 0.22),
+        0 16px 28px -12px rgba(19, 42, 19, 0.62), 0 4px 8px -3px rgba(19, 42, 19, 0.45);
+    }
+
+    @media (prefers-reduced-transparency: reduce) {
+      .v4 .pill {
+        background: var(--paper);
+        backdrop-filter: none;
+      }
+
+      .v4 .item--on {
+        background: var(--lime);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+    <symbol id="i-camera" viewBox="0 0 24 24">
+      <path
+        d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z" />
+      <circle cx="12" cy="13" r="3" />
+    </symbol>
+    <symbol id="i-user" viewBox="0 0 24 24">
+      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </symbol>
+    <symbol id="i-history" viewBox="0 0 24 24">
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+      <path d="M3 3v5h5" />
+      <path d="M12 7v5l4 2" />
+    </symbol>
+  </svg>
+
+  <h1>Bottom nav — five takes on the reference</h1>
+  <p class="lede">Each block stacks the reference render on top of a variant, drawn at the exact
+    coordinates measured off the reference PNG. The numbers are mean absolute error per channel
+    against that PNG, out of 255: one for the sphere's surface, one for every shadow pixel around
+    both shapes. Lower is closer.</p>
+
+  <div class="grid">
+    <div>
+      <h2>V0 <small>&mdash; what the app ships today</small><b>sphere 4.46 &middot; shadows 0.63</b></h2>
+      <div class="pair v0">
+        <div class="tag">reference</div>
+        <img src="lab-ref.png" alt="Reference render of the bottom navigation">
+        <div class="tag">V0</div>
+        <div class="stage" id="s-v0">
+          <div class="pill">
+            <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
+            <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
+          </div>
+          <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2>V1 <small>&mdash; circular gradient, first fit</small><b>sphere 4.99 &middot; shadows 0.22</b></h2>
+      <div class="pair v1">
+        <div class="tag">reference</div>
+        <img src="lab-ref.png" alt="Reference render of the bottom navigation">
+        <div class="tag">V1</div>
+        <div class="stage" id="s-v1">
+          <div class="pill">
+            <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
+            <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
+          </div>
+          <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2>V2 <small>&mdash; V5 plus a hairline edge on both shapes</small><b>sphere 2.36 &middot; shadows 0.26</b></h2>
+      <div class="pair v2">
+        <div class="tag">reference</div>
+        <img src="lab-ref.png" alt="Reference render of the bottom navigation">
+        <div class="tag">V2</div>
+        <div class="stage" id="s-v2">
+          <div class="pill">
+            <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
+            <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
+          </div>
+          <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2>V3 <small>&mdash; the fitted ellipse cut down to 5 stops</small><b>sphere 2.80 &middot; shadows 0.22</b></h2>
+      <div class="pair v3">
+        <div class="tag">reference</div>
+        <img src="lab-ref.png" alt="Reference render of the bottom navigation">
+        <div class="tag">V3</div>
+        <div class="stage" id="s-v3">
+          <div class="pill">
+            <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
+            <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
+          </div>
+          <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2>V4 <small>&mdash; real Liquid Glass, over a tinted backdrop</small><b>sphere 2.47 &middot; shadows n/a</b></h2>
+      <div class="pair v4">
+        <div class="tag">reference</div>
+        <img src="lab-ref.png" alt="Reference render of the bottom navigation">
+        <div class="tag">V4</div>
+        <div class="stage" id="s-v4">
+          <div class="pill">
+            <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
+            <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
+          </div>
+          <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2>V5 <small>&mdash; the candidate: fitted ellipse, 10 stops</small><b>sphere 2.13 &middot; shadows 0.22</b></h2>
+      <div class="pair v5">
+        <div class="tag">reference</div>
+        <img src="lab-ref.png" alt="Reference render of the bottom navigation">
+        <div class="tag">V5</div>
+        <div class="stage" id="s-v5">
+          <div class="pill">
+            <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
+            <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
+          </div>
+          <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 style="margin-top:12px">Reference at 2&times;</h2>
+  <div class="pair" style="width:570px;margin-bottom:26px"><img src="lab-ref.png"
+      style="width:570px;height:214px" alt="Reference render at 2x"></div>
+
+  <h2>V5 at 2&times;</h2>
+  <div class="pair v5" style="width:570px">
+    <div class="zoom">
+      <div class="stage">
+        <div class="pill">
+          <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
+          <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
+        </div>
+        <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
