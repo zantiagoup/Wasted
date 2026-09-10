@@ -3,3 +3,8 @@ html design/
 
 .DS_Store
 node_modules/
+
+# Experimentos locales; las pantallas y recursos finales siguen versionados.
+/wasted/lab-nav.html
+/wasted/lab-ref.png
+/package-lock.json

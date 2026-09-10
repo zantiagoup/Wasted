@@ -149,6 +149,18 @@ textarea:focus-visible {
   height: 28px;
 }
 
+.w-main {
+  padding-bottom: 40px;
+}
+
+.w-setup {
+  padding: 34px 0 40px;
+}
+
+.w-icon-sprite {
+  position: absolute;
+}
+
 /* 3. Top bar ------------------------------------------------------------ */
 
 .w-topbar {
@@ -222,6 +234,10 @@ textarea:focus-visible {
   flex-direction: column;
   gap: 20px;
   height: 100%;
+}
+
+.w-stack--auto {
+  height: auto;
 }
 
 .w-stack > .w-tile {
@@ -525,6 +541,15 @@ textarea:focus-visible {
 
 /* 11. Result ------------------------------------------------------------ */
 
+.w-result__title {
+  margin: 14px 0 18px;
+}
+
+.w-result__description {
+  font-size: 19px;
+  font-weight: 500;
+}
+
 .w-meter {
   height: 10px;
   margin: 10px 0 8px;
@@ -586,6 +611,15 @@ textarea:focus-visible {
 }
 
 /* 12. History ----------------------------------------------------------- */
+
+.w-history-list {
+  margin-top: 2px;
+}
+
+.w-profile__caption {
+  color: var(--sage);
+  margin-top: 6px;
+}
 
 .w-streak {
   display: flex;
@@ -823,6 +857,10 @@ textarea:focus-visible {
 
 .w-modal::backdrop {
   background: rgba(19, 42, 19, 0.62);
+}
+
+.w-modal__actions {
+  margin-top: 22px;
 }
 
 .w-modal__head {
