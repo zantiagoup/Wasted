@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wasted — Result</title>
+  <meta name="description"
+    content="Material, category, preparation and the nearest authorised drop-off point that accepts it.">
+  <link rel="icon" href="../design-system/Wasted_Icon.svg">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap-grid.min.css"
+    integrity="sha384-VIeCCV0aVHr99fkXDSmzLRuJhJWQXe4bDXs6hgg6w6zOTbtAWr8RqSNWu4a2ef9p" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=satoshi@400,500,700&display=swap">
+  <link rel="stylesheet" href="css/wasted.css">
+</head>
+
+<body>
+  <a class="w-skip" href="#main">Skip to content</a>
+
+  <div class="container">
+
+    <header class="w-topbar">
+      <img class="w-topbar__mark" src="../design-system/Wasted_Icon.svg" alt="">
+      <span class="w-topbar__where">Guadalajara, Jalisco</span>
+    </header>
+
+    <main id="main" class="w-section">
+      <p class="w-flag">Sample data — the model is not wired up yet</p>
+
+      <div class="row g-4 g-lg-5">
+
+        <div class="col-12 col-lg-7">
+          <p class="w-chip">PET</p>
+          <h1 style="margin:10px 0 6px">Water bottle</h1>
+
+          <p class="w-meter__label" id="confidence-label">Confidence 92%</p>
+          <div class="w-meter" role="img" aria-labelledby="confidence-label">
+            <div class="w-meter__fill" style="width:92%"></div>
+          </div>
+          <p class="w-field__hint" style="margin-top:8px">Below 60% Wasted asks for another photo instead of
+            guessing.</p>
+
+          <div class="w-card" style="margin-top:22px">
+            <div class="w-card__head">
+              <h2>What it is made of</h2>
+            </div>
+            <p style="margin:0">Polyethylene terephthalate, resin code 1. It is accepted by every collection route in
+              this locality as long as it is clean and dry.</p>
+          </div>
+
+          <div class="w-card">
+            <div class="w-card__head">
+              <h2>Before you throw it</h2>
+            </div>
+            <ul class="w-prep">
+              <li>Empty it and rinse it once. Any residue sends the whole batch to landfill.</li>
+              <li>Take the cap off and keep it. Caps are a different plastic and are collected separately.</li>
+              <li>Crush it lengthwise so it does not take four times the space it needs.</li>
+            </ul>
+          </div>
+
+          <div class="w-card">
+            <div class="w-card__head">
+              <h2>Did we get it right?</h2>
+            </div>
+            <p>Corrections are the point, not an apology. What you pick here is stored so the team can measure how often
+              the answer is wrong.</p>
+            <div class="w-btn-row">
+              <a class="w-btn w-btn--small" href="history.html">Yes, that is it</a>
+              <a class="w-btn w-btn--ghost w-btn--small" href="scan.html">No, it is something else</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-5">
+          <div class="w-card">
+            <div class="w-card__head">
+              <h2>Where it goes</h2>
+              <span class="w-chip w-chip--outline">Map preview</span>
+            </div>
+
+            <!-- Placeholder for the OpenStreetMap preview. Same box, same
+                 proportions, so swapping in the real map changes nothing else. -->
+            <svg class="w-map" viewBox="0 0 400 260" role="img"
+              aria-label="Map preview: the nearest drop-off point is 1.2 kilometres north-east of you.">
+              <rect width="400" height="260" fill="#ecf39e" />
+              <g stroke="#90a955" stroke-width="9" stroke-linecap="square">
+                <path d="M0 78h400M0 186h400M96 0v260M268 0v260" />
+              </g>
+              <g stroke="#90a955" stroke-width="4">
+                <path d="M0 132h400M186 0v260M340 78v108" />
+              </g>
+              <g fill="#ffffff">
+                <rect x="18" y="96" width="60" height="24" rx="3" />
+                <rect x="200" y="200" width="52" height="30" rx="3" />
+                <rect x="290" y="16" width="42" height="46" rx="3" />
+              </g>
+              <circle cx="186" cy="186" r="9" fill="#4f772d" />
+              <circle cx="186" cy="186" r="19" fill="none" stroke="#4f772d" stroke-width="3" opacity="0.5" />
+              <path d="M268 62a17 17 0 0 0-17 17c0 12 17 30 17 30s17-18 17-30a17 17 0 0 0-17-17z" fill="#132a13" />
+              <circle cx="268" cy="79" r="6.5" fill="#ecf39e" />
+            </svg>
+
+            <div class="w-point">
+              <span class="w-point__distance">1.2<br><span style="font-size:13px;font-weight:500">km</span></span>
+              <span>
+                <p class="w-point__name">Punto Limpio Chapultepec</p>
+                <p class="w-point__meta">Authorised site, SEMADET register. Accepts PET, glass, aluminium and
+                  cardboard.<br>Open today until 6:00 pm.</p>
+              </span>
+            </div>
+
+            <div class="w-btn-row" style="margin-top:20px">
+              <a class="w-btn w-btn--small" href="https://www.google.com/maps" rel="noopener">Open in Google Maps</a>
+              <a class="w-btn w-btn--ghost w-btn--small" href="https://waze.com/ul" rel="noopener">Open in Waze</a>
+            </div>
+          </div>
+
+          <div class="w-note" style="margin-top:18px">
+            <p>Sites come from the SEMADET register of authorised collection points published for Jalisco. Wasted only
+              shows a site if the register says it accepts this material.</p>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Reusable component: bottom navigation. Identical on every screen; only
+       aria-current moves. -->
+  <nav class="w-nav" aria-label="Main">
+    <ul class="w-nav__pill">
+      <li>
+        <a class="w-nav__item" href="profile.html" aria-label="Profile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 21c0-4 3.6-6 8-6s8 2 8 6" />
+          </svg>
+          <span aria-hidden="true">Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="w-nav__item" href="history.html" aria-label="History">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 7v5l3.5 2" />
+          </svg>
+          <span aria-hidden="true">History</span>
+        </a>
+      </li>
+    </ul>
+    <a class="w-nav__fab" href="scan.html" aria-label="Scan">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+        stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path
+          d="M3 8.5A2.5 2.5 0 0 1 5.5 6H8l1.5-2h5L16 6h2.5A2.5 2.5 0 0 1 21 8.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z" />
+        <circle cx="12" cy="13" r="3.5" />
+      </svg>
+    </a>
+  </nav>
+
+</body>
+
+</html>

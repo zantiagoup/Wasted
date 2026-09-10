@@ -1,0 +1,859 @@
+/* ==========================================================================
+   Wasted — application stylesheet
+   Every token here comes from design-system/DESIGN_SYSTEM.md. Do not add
+   colours, fonts or shadows that are not defined there.
+   ========================================================================== */
+
+/* 1. Tokens ------------------------------------------------------------- */
+
+:root {
+  color-scheme: light;
+
+  /* Palette — five greens and paper. No support colour, no neutral grey. */
+  --forest: #132a13;
+  --pine: #31572c;
+  --moss: #4f772d;
+  --sage: #90a955;
+  --lime: #ecf39e;
+  --paper: #ffffff;
+
+  /* Geometry */
+  --radius-lg: 28px;
+  --radius-md: 20px;
+  --radius-sm: 12px;
+  --nav-height: 76px;
+
+  /* The soft shadow of the proposal's closing card, scaled down. */
+  --lift: 0 18px 40px -22px rgba(19, 42, 19, 0.45);
+  --lift-strong: 0 22px 48px -18px rgba(19, 42, 19, 0.55);
+}
+
+/* 2. Base --------------------------------------------------------------- */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding-bottom: calc(var(--nav-height) + 76px);
+  background: var(--paper);
+  color: var(--forest);
+  font-family: "Satoshi", "Helvetica Neue", Arial, sans-serif;
+  font-size: 17px;
+  font-synthesis: none;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(30px, 5vw, 40px);
+}
+
+h2 {
+  font-size: clamp(22px, 3vw, 27px);
+}
+
+h3 {
+  font-size: 19px;
+  letter-spacing: -0.02em;
+}
+
+p {
+  margin: 0 0 16px;
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--pine);
+  text-underline-offset: 0.18em;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Accessibility: a visible ring on every interactive element. */
+a:focus-visible,
+button:focus-visible,
+select:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--moss);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.w-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 20;
+  padding: 12px 20px;
+  background: var(--forest);
+  color: var(--lime);
+  font-weight: 500;
+}
+
+.w-skip:focus {
+  left: 12px;
+  top: 12px;
+}
+
+/* Announced by screen readers, invisible on screen. */
+.w-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* 3. Top bar ------------------------------------------------------------ */
+
+.w-topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 22px 0 6px;
+}
+
+.w-topbar__mark {
+  width: 22px;
+  height: auto;
+  flex: none;
+}
+
+.w-topbar__where {
+  color: var(--pine);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.w-lede {
+  max-width: 58ch;
+  color: var(--pine);
+  font-size: 19px;
+  line-height: 1.6;
+}
+
+.w-section {
+  padding: 10px 0 28px;
+}
+
+/* 4. Cards, chips, notes ------------------------------------------------ */
+
+.w-card {
+  padding: 26px 24px;
+  border: 1px solid var(--sage);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+}
+
+.w-card + .w-card {
+  margin-top: 18px;
+}
+
+.w-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.w-card--dark {
+  border-color: var(--forest);
+  background: var(--forest);
+  color: var(--lime);
+  box-shadow: var(--lift);
+}
+
+.w-card--dark h2,
+.w-card--dark h3 {
+  color: var(--lime);
+}
+
+.w-card--dark p {
+  color: var(--sage);
+}
+
+.w-chip {
+  display: inline-block;
+  padding: 4px 13px;
+  border-radius: 999px;
+  background: var(--lime);
+  color: var(--forest);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.w-chip--outline {
+  background: transparent;
+  border: 1px solid var(--sage);
+  color: var(--pine);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+/* Marks every screen that is showing sample data instead of a real answer. */
+.w-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 7px 14px;
+  border: 1px dashed var(--sage);
+  border-radius: 999px;
+  color: var(--pine);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.w-note {
+  padding: 16px 18px;
+  border-radius: var(--radius-sm);
+  background: var(--lime);
+  color: var(--forest);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.w-note p:last-child {
+  margin-bottom: 0;
+}
+
+/* 5. Buttons ------------------------------------------------------------ */
+
+.w-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 13px 26px;
+  border: 1px solid var(--forest);
+  border-radius: 999px;
+  background: var(--forest);
+  color: var(--lime);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.w-btn:hover {
+  background: var(--pine);
+  border-color: var(--pine);
+  color: var(--lime);
+}
+
+.w-btn--ghost {
+  background: transparent;
+  border-color: var(--sage);
+  color: var(--pine);
+}
+
+.w-btn--ghost:hover {
+  background: var(--lime);
+  border-color: var(--moss);
+  color: var(--forest);
+}
+
+.w-btn--block {
+  width: 100%;
+}
+
+.w-btn--small {
+  min-height: 44px;
+  padding: 9px 18px;
+  font-size: 15px;
+}
+
+.w-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* 6. Form controls ------------------------------------------------------ */
+
+.w-field {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.w-field__label {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: 500;
+}
+
+.w-field__hint {
+  margin: 0 0 9px;
+  color: var(--pine);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.w-select {
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 44px 12px 16px;
+  border: 1px solid var(--sage);
+  border-radius: var(--radius-sm);
+  background-color: var(--paper);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2331572c' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 12px;
+  color: var(--forest);
+  font-family: inherit;
+  font-size: 16px;
+  appearance: none;
+}
+
+/* A permission row: name, one plain sentence, and a switch. */
+.w-switch {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 1px solid var(--sage);
+}
+
+.w-switch__text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.w-switch__name {
+  display: block;
+  font-weight: 500;
+}
+
+.w-switch__hint {
+  display: block;
+  color: var(--pine);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.w-switch__input {
+  flex: none;
+  width: 52px;
+  height: 30px;
+  margin: 4px 0 0;
+  border: 1px solid var(--sage);
+  border-radius: 999px;
+  background: var(--paper);
+  appearance: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.w-switch__input::after {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 22px;
+  margin: 3px;
+  border-radius: 50%;
+  background: var(--sage);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.w-switch__input:checked {
+  background: var(--forest);
+  border-color: var(--forest);
+}
+
+.w-switch__input:checked::after {
+  background: var(--lime);
+  transform: translateX(22px);
+}
+
+/* 7. Viewfinder (Escanear) ---------------------------------------------- */
+
+.w-viewfinder {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 3 / 4;
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  background: var(--forest);
+  box-shadow: var(--lift-strong);
+  text-align: center;
+}
+
+.w-viewfinder__hint {
+  margin: 0;
+  color: var(--lime);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.w-viewfinder__hint span {
+  display: block;
+  margin-top: 8px;
+  color: var(--sage);
+  font-size: 15px;
+}
+
+/* Four corner brackets, drawn with borders on empty spans. */
+.w-bracket {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  border: 3px solid var(--sage);
+}
+
+.w-bracket--tl {
+  top: 22px;
+  left: 22px;
+  border-right: 0;
+  border-bottom: 0;
+  border-top-left-radius: 12px;
+}
+
+.w-bracket--tr {
+  top: 22px;
+  right: 22px;
+  border-left: 0;
+  border-bottom: 0;
+  border-top-right-radius: 12px;
+}
+
+.w-bracket--bl {
+  bottom: 22px;
+  left: 22px;
+  border-right: 0;
+  border-top: 0;
+  border-bottom-left-radius: 12px;
+}
+
+.w-bracket--br {
+  bottom: 22px;
+  right: 22px;
+  border-left: 0;
+  border-top: 0;
+  border-bottom-right-radius: 12px;
+}
+
+/* Points at the FAB, which is the shutter on the Scan screen. */
+.w-shutter__label {
+  display: block;
+  margin: 20px 0 22px;
+  color: var(--pine);
+  font-size: 15px;
+  text-align: center;
+}
+
+/* 8. Steps list (Escanear, desktop column) ------------------------------ */
+
+.w-steps {
+  counter-reset: step;
+}
+
+.w-steps li {
+  position: relative;
+  padding: 0 0 20px 46px;
+  counter-increment: step;
+}
+
+.w-steps li::before {
+  content: counter(step);
+  position: absolute;
+  top: 2px;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--lime);
+  color: var(--forest);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.w-steps b {
+  display: block;
+  font-weight: 500;
+}
+
+.w-steps span {
+  color: var(--pine);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* 9. Result screen ------------------------------------------------------ */
+
+.w-meter {
+  height: 10px;
+  margin: 8px 0 6px;
+  border-radius: 999px;
+  background: var(--lime);
+  overflow: hidden;
+}
+
+.w-meter__fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--pine);
+}
+
+.w-meter__label {
+  color: var(--pine);
+  font-size: 15px;
+}
+
+.w-prep li {
+  position: relative;
+  padding: 0 0 10px 26px;
+  line-height: 1.55;
+}
+
+.w-prep li::before {
+  content: "";
+  position: absolute;
+  top: 11px;
+  left: 0;
+  width: 12px;
+  height: 3px;
+  background: var(--moss);
+}
+
+.w-map {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--sage);
+}
+
+.w-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.w-point__distance {
+  flex: none;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--lime);
+  color: var(--forest);
+  font-weight: 700;
+  text-align: center;
+}
+
+.w-point__name {
+  margin: 0 0 2px;
+  font-weight: 500;
+}
+
+.w-point__meta {
+  margin: 0;
+  color: var(--pine);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* 10. History ----------------------------------------------------------- */
+
+.w-streak {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 24px;
+  border-radius: var(--radius-md);
+  background: var(--forest);
+  color: var(--lime);
+  box-shadow: var(--lift);
+}
+
+.w-streak__count {
+  font-size: 46px;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.w-streak__text {
+  margin: 0;
+  color: var(--sage);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.w-streak__text b {
+  display: block;
+  color: var(--lime);
+  font-size: 17px;
+  font-weight: 500;
+}
+
+/* One history entry. The whole card is the link to the result screen. */
+.w-item {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 16px;
+  border: 1px solid var(--sage);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+}
+
+.w-item__link {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.w-item__link:hover .w-item__name {
+  text-decoration: underline;
+}
+
+/* Placeholder for the flat-shaded 3D render, one per category. */
+.w-thumb {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  border-radius: var(--radius-sm);
+  background: var(--lime);
+}
+
+.w-thumb svg {
+  width: 42px;
+  height: 42px;
+}
+
+.w-item__body {
+  min-width: 0;
+}
+
+.w-item__name {
+  display: block;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.w-item__meta {
+  display: block;
+  color: var(--pine);
+  font-size: 14px;
+}
+
+.w-item__actions {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--sage);
+}
+
+/* 11. Onboarding hero --------------------------------------------------- */
+
+.w-hero {
+  display: grid;
+  align-content: center;
+  gap: 34px;
+  min-height: 320px;
+  padding: 48px 34px;
+  border-radius: var(--radius-lg);
+  background: var(--forest);
+  box-shadow: var(--lift-strong);
+}
+
+.w-hero__logo {
+  display: block;
+  width: min(100%, 300px);
+  height: auto;
+}
+
+.w-hero__slogan {
+  margin: 0;
+  color: var(--lime);
+  font-size: clamp(38px, 6vw, 58px);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.w-hero__text {
+  margin: 0;
+  max-width: 34ch;
+  color: var(--sage);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+/* 12. Bottom navigation ------------------------------------------------- */
+
+.w-nav {
+  position: fixed;
+  z-index: 10;
+  right: 0;
+  bottom: 18px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 16px;
+  pointer-events: none;
+}
+
+.w-nav > * {
+  pointer-events: auto;
+}
+
+.w-nav__pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  border: 1px solid var(--sage);
+  border-radius: 999px;
+  background: var(--paper);
+  box-shadow: var(--lift);
+}
+
+.w-nav__item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 52px;
+  padding: 0 18px;
+  border-radius: 999px;
+  color: var(--forest);
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.w-nav__item svg {
+  width: 23px;
+  height: 23px;
+  flex: none;
+}
+
+.w-nav__item:hover {
+  background: var(--lime);
+  color: var(--forest);
+}
+
+/* Only the current page shows its name; the rest stay icon-only. */
+.w-nav__item[aria-current="page"] {
+  background: var(--lime);
+}
+
+.w-nav__item span {
+  display: none;
+}
+
+.w-nav__item[aria-current="page"] span {
+  display: inline;
+}
+
+.w-nav__fab {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--forest);
+  color: var(--lime);
+  box-shadow: var(--lift-strong);
+}
+
+.w-nav__fab svg {
+  width: 28px;
+  height: 28px;
+}
+
+.w-nav__fab:hover {
+  background: var(--pine);
+  color: var(--lime);
+}
+
+.w-nav__fab[aria-current="page"] {
+  outline: 4px solid var(--lime);
+  outline-offset: 3px;
+}
+
+/* 13. Wide view --------------------------------------------------------- */
+
+@media (min-width: 992px) {
+  body {
+    font-size: 17px;
+  }
+
+  .w-topbar {
+    padding-top: 34px;
+  }
+
+  .w-viewfinder {
+    aspect-ratio: 4 / 5;
+  }
+
+  .w-card {
+    padding: 32px 30px;
+  }
+}
+
+/* Narrow phones: the pill drops its padding before it overflows. */
+@media (max-width: 400px) {
+  .w-nav {
+    gap: 8px;
+  }
+
+  .w-nav__item {
+    padding: 0 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

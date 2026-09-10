@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wasted — Profile</title>
+  <meta name="description" content="Your locality, your permissions, and everything Wasted has kept about you.">
+  <link rel="icon" href="../design-system/Wasted_Icon.svg">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap-grid.min.css"
+    integrity="sha384-VIeCCV0aVHr99fkXDSmzLRuJhJWQXe4bDXs6hgg6w6zOTbtAWr8RqSNWu4a2ef9p" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=satoshi@400,500,700&display=swap">
+  <link rel="stylesheet" href="css/wasted.css">
+</head>
+
+<body>
+  <a class="w-skip" href="#main">Skip to content</a>
+
+  <div class="container">
+
+    <header class="w-topbar">
+      <img class="w-topbar__mark" src="../design-system/Wasted_Icon.svg" alt="">
+      <span class="w-topbar__where">Guadalajara, Jalisco</span>
+    </header>
+
+    <main id="main" class="w-section">
+      <h1>Profile</h1>
+      <p class="w-lede">Three things live here, and you only touch them when something changes.</p>
+
+      <div class="row g-4 g-lg-5">
+
+        <div class="col-12 col-lg-6">
+          <form class="w-card" action="profile.html" method="get">
+            <div class="w-card__head">
+              <h2>Locality</h2>
+            </div>
+            <p class="w-field__hint">Every rule and every drop-off point Wasted shows you comes from this choice. Change
+              it and the answers change with it.</p>
+            <label class="w-sr" for="locality">Locality</label>
+            <select class="w-select" id="locality" name="locality">
+              <option value="gdl" selected>Guadalajara, Jalisco</option>
+              <option value="zap">Zapopan, Jalisco</option>
+              <option value="" disabled>Other municipalities — not in this version</option>
+            </select>
+          </form>
+
+          <div class="w-card">
+            <div class="w-card__head">
+              <h2>Permissions</h2>
+            </div>
+            <div class="w-switch">
+              <span class="w-switch__text">
+                <label class="w-switch__name" for="perm-camera">Camera</label>
+                <span class="w-switch__hint">Turn it off and Wasted falls back to the text entry.</span>
+              </span>
+              <input class="w-switch__input" type="checkbox" id="perm-camera" checked>
+            </div>
+            <div class="w-switch">
+              <span class="w-switch__text">
+                <label class="w-switch__name" for="perm-location">Location</label>
+                <span class="w-switch__hint">Turn it off and you still get the category, but not the nearest
+                  site.</span>
+              </span>
+              <input class="w-switch__input" type="checkbox" id="perm-location" checked>
+            </div>
+            <div class="w-switch">
+              <span class="w-switch__text">
+                <label class="w-switch__name" for="perm-history">Keep my history</label>
+                <span class="w-switch__hint">Labels, confidence, locality and corrections. Never the photo.</span>
+              </span>
+              <input class="w-switch__input" type="checkbox" id="perm-history" checked>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="w-card w-card--dark">
+            <div class="w-card__head">
+              <h2>What is stored</h2>
+            </div>
+            <p>For each item you classified: the labels the model returned, its confidence score, the locality you had
+              selected, and the correction you made if you made one. The photograph is not among them.</p>
+            <p style="margin-bottom:0"><strong style="color:var(--lime)">8 classifications</strong> on this device.</p>
+          </div>
+
+          <div class="w-card">
+            <div class="w-card__head">
+              <h2>Delete everything</h2>
+            </div>
+            <p>This clears the eight entries and resets the streak to zero. There is no copy on a server to restore it
+              from.</p>
+            <button class="w-btn w-btn--ghost" type="button">Delete my history</button>
+          </div>
+
+          <div class="w-card">
+            <div class="w-card__head">
+              <h2>About</h2>
+            </div>
+            <p class="w-point__meta" style="margin-bottom:10px">Wasted — prototype, first delivery.<br>Web Development,
+              Universidad Panamericana Guadalajara.<br>Andres Garcia Gonzalez · Zantiago Vargas Beltran · Pedro Chucuan
+              Gerardo.</p>
+            <a class="w-btn w-btn--ghost w-btn--small" href="index.html">Run the set-up screen again</a>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Reusable component: bottom navigation. Identical on every screen; only
+       aria-current moves. -->
+  <nav class="w-nav" aria-label="Main">
+    <ul class="w-nav__pill">
+      <li>
+        <a class="w-nav__item" href="profile.html" aria-current="page" aria-label="Profile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 21c0-4 3.6-6 8-6s8 2 8 6" />
+          </svg>
+          <span aria-hidden="true">Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="w-nav__item" href="history.html" aria-label="History">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 7v5l3.5 2" />
+          </svg>
+          <span aria-hidden="true">History</span>
+        </a>
+      </li>
+    </ul>
+    <a class="w-nav__fab" href="scan.html" aria-label="Scan">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+        stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path
+          d="M3 8.5A2.5 2.5 0 0 1 5.5 6H8l1.5-2h5L16 6h2.5A2.5 2.5 0 0 1 21 8.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z" />
+        <circle cx="12" cy="13" r="3.5" />
+      </svg>
+    </a>
+  </nav>
+
+</body>
+
+</html>

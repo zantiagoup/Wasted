@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wasted — Scan</title>
+  <meta name="description" content="Point the camera at the item you are about to discard and take the photo.">
+  <link rel="icon" href="../design-system/Wasted_Icon.svg">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap-grid.min.css"
+    integrity="sha384-VIeCCV0aVHr99fkXDSmzLRuJhJWQXe4bDXs6hgg6w6zOTbtAWr8RqSNWu4a2ef9p" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f%5B%5D=satoshi@400,500,700&display=swap">
+  <link rel="stylesheet" href="css/wasted.css">
+</head>
+
+<body>
+  <a class="w-skip" href="#main">Skip to content</a>
+
+  <div class="container">
+
+    <!-- Reusable component: top bar. Isotype is decorative because the heading
+         below already names the screen. -->
+    <header class="w-topbar">
+      <img class="w-topbar__mark" src="../design-system/Wasted_Icon.svg" alt="">
+      <span class="w-topbar__where">Guadalajara, Jalisco</span>
+    </header>
+
+    <main id="main" class="w-section">
+      <div class="row g-4 g-lg-5 align-items-center">
+
+        <div class="col-12 col-lg-6">
+          <div class="w-viewfinder">
+            <span class="w-bracket w-bracket--tl"></span>
+            <span class="w-bracket w-bracket--tr"></span>
+            <span class="w-bracket w-bracket--bl"></span>
+            <span class="w-bracket w-bracket--br"></span>
+            <p class="w-viewfinder__hint">Point at the item<span>One object at a time, against a plain
+                background.</span></p>
+          </div>
+
+          <p class="w-shutter__label">Tap the camera button to take the photo.</p>
+
+          <!-- Both alternates end on the same Result screen: one flow, three entrances. -->
+          <div class="w-btn-row">
+            <a class="w-btn w-btn--ghost w-btn--small" href="result.html">Choose an existing photo</a>
+            <a class="w-btn w-btn--ghost w-btn--small" href="result.html">Describe it in words</a>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <h1>Scan</h1>
+          <p class="w-lede">Four steps, and you can stop at any of them.</p>
+
+          <ol class="w-steps">
+            <li>
+              <b>You take the photo</b>
+              <span>Or you pick one you already have. No camera? The text entry gets you to the same answer.</span>
+            </li>
+            <li>
+              <b>Wasted reads the image</b>
+              <span>The photo goes to the vision model, which must answer in a fixed JSON schema: object, material,
+                category, preparation.</span>
+            </li>
+            <li>
+              <b>The category is matched to a drop-off point</b>
+              <span>Wasted compares the material against what each authorised site in your locality accepts.</span>
+            </li>
+            <li>
+              <b>You confirm or correct</b>
+              <span>Every answer carries a confidence score. When it is wrong, saying so is one tap.</span>
+            </li>
+          </ol>
+
+          <div class="w-note">
+            <p>The photo is discarded as soon as the answer comes back. Nothing about it is written to disk.</p>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Reusable component: bottom navigation. Identical on every screen; only
+       aria-current moves. -->
+  <nav class="w-nav" aria-label="Main">
+    <ul class="w-nav__pill">
+      <li>
+        <a class="w-nav__item" href="profile.html" aria-label="Profile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 21c0-4 3.6-6 8-6s8 2 8 6" />
+          </svg>
+          <span aria-hidden="true">Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="w-nav__item" href="history.html" aria-label="History">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 7v5l3.5 2" />
+          </svg>
+          <span aria-hidden="true">History</span>
+        </a>
+      </li>
+    </ul>
+    <a class="w-nav__fab" href="result.html" aria-label="Take photo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+        stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path
+          d="M3 8.5A2.5 2.5 0 0 1 5.5 6H8l1.5-2h5L16 6h2.5A2.5 2.5 0 0 1 21 8.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z" />
+        <circle cx="12" cy="13" r="3.5" />
+      </svg>
+    </a>
+  </nav>
+
+</body>
+
+</html>
