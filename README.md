@@ -19,7 +19,7 @@ observations and the privacy decisions, is `entregables/wasted_FixedProposal.pdf
 
 | File | Screen | What it is |
 |---|---|---|
-| `wasted/index.html` | Set up | Runs once. Asks for the locality and the two permissions. Nothing works without a locality: every rule and every drop-off point depends on it. |
+| `wasted/index.html` | Set up | Runs once. Asks for the city and the two permissions. Nothing works without a city: every rule and every drop-off point depends on it. Also carries the desktop notice below. |
 | `wasted/scan.html` | Scan | The app itself. Viewfinder plus two alternate entrances for when there is no photo. The round button in the bar is the shutter here. |
 | `wasted/result.html` | Result | Material, category, confidence, preparation, map preview and route. Not a menu item: it is a screen shared by Scan and History. |
 | `wasted/history.html` | History | Every classified item as a card, plus the streak. Opening a card reopens the Result screen. |
@@ -72,6 +72,17 @@ its focal point up and to the left, an inset highlight at the top with an inset 
 bottom for the bevel, a cast shadow underneath, and a `::after` layer carrying the specular
 highlight. Pressing it drops the cast shadow and deepens the inner shade. All four greens come
 from the palette.
+
+### The desktop notice
+
+Set up shows a dialog when it is opened on a computer, explaining how to switch the browser into
+device emulation so the reviewer sees the phone layout the app ships with. It is informational
+only: `wasted/js/viewport-tip.js` is the only script in the project and it touches nothing else.
+
+It uses a native `<dialog>`, so the focus trap, the Esc key and the inert background come from
+the browser. The trigger is `(min-width: 992px) and (pointer: fine)`; device emulation reports a
+coarse pointer and a narrow width, so entering it closes the dialog on its own, which doubles as
+confirmation that it worked.
 
 ### What is not wired up yet
 

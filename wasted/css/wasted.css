@@ -764,6 +764,83 @@ input:focus-visible {
   box-shadow: 0 -8px 16px -8px rgba(0, 0, 0, 0.9) inset, 0 6px 12px -8px rgba(19, 42, 19, 0.5);
 }
 
+/* 16. Viewport tip -------------------------------------------------------
+   Informational only, and only on a desktop. Uses <dialog> so the focus trap,
+   the Esc key and the inert background come from the browser instead of code
+   we would have to defend. */
+
+.w-modal {
+  width: min(520px, calc(100vw - 32px));
+  padding: 30px;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  color: var(--forest);
+  box-shadow: var(--lift-strong);
+}
+
+.w-modal::backdrop {
+  background: rgba(19, 42, 19, 0.62);
+}
+
+.w-modal__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.w-modal__swap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--moss);
+}
+
+.w-modal h2 {
+  margin-bottom: 10px;
+  font-size: 25px;
+}
+
+.w-modal > p {
+  color: var(--pine);
+}
+
+/* The three keystrokes, numbered, on the grouping surface. */
+.w-howto {
+  display: grid;
+  gap: 2px;
+  margin: 18px 0;
+  padding: 18px 20px;
+  border-radius: var(--radius-sm);
+  background: var(--lime);
+  counter-reset: howto;
+}
+
+.w-howto li {
+  position: relative;
+  padding-left: 28px;
+  counter-increment: howto;
+  line-height: 1.7;
+}
+
+.w-howto li::before {
+  content: counter(howto) ".";
+  position: absolute;
+  left: 0;
+  color: var(--moss);
+  font-weight: 700;
+}
+
+.w-howto kbd {
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: var(--paper);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+}
+
 /* 15. Wide view --------------------------------------------------------- */
 
 @media (min-width: 992px) {
