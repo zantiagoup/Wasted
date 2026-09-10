@@ -98,7 +98,8 @@ ol {
 a:focus-visible,
 button:focus-visible,
 select:focus-visible,
-input:focus-visible {
+input:focus-visible,
+textarea:focus-visible {
   outline: 3px solid var(--moss);
   outline-offset: 3px;
   border-radius: 6px;
@@ -308,6 +309,18 @@ input:focus-visible {
   color: var(--lime);
 }
 
+/* The way out of a dialog. --soft would be white on the white dialog, so the
+   secondary action takes the grouping surface instead. lime + forest is 13.07. */
+.w-btn--quiet {
+  background: var(--lime);
+  color: var(--forest);
+}
+
+.w-btn--quiet:hover {
+  background: var(--sage);
+  color: var(--forest);
+}
+
 .w-btn--block {
   width: 100%;
 }
@@ -348,6 +361,28 @@ input:focus-visible {
   font-family: inherit;
   font-size: 16px;
   appearance: none;
+}
+
+/* Free text, for when the camera could not name the item. Sits on the
+   grouping surface so it reads as a field inside the dialog, not as a page. */
+.w-textarea {
+  width: 100%;
+  min-height: 96px;
+  padding: 14px 16px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--lime);
+  color: var(--forest);
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+/* pine on lime is 6.58, so the hint still passes AA. */
+.w-textarea::placeholder {
+  color: var(--pine);
+  opacity: 1;
 }
 
 .w-switch {
@@ -773,6 +808,11 @@ input:focus-visible {
 
 .w-modal {
   width: min(520px, calc(100vw - 32px));
+  /* A long dialog scrolls inside itself instead of pushing its buttons past
+     the bottom of the screen. */
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 30px;
   border: 0;
   border-radius: var(--radius-lg);
@@ -804,6 +844,12 @@ input:focus-visible {
   font-size: 25px;
 }
 
+/* When the icon sits beside the title instead of above it, the dialog saves a
+   whole row: enough for the buttons to stay on screen on a short phone. */
+.w-modal__head h2 {
+  margin-bottom: 0;
+}
+
 .w-modal > p {
   color: var(--pine);
 }
@@ -832,6 +878,33 @@ input:focus-visible {
   left: 0;
   color: var(--moss);
   font-weight: 700;
+}
+
+/* Same surface as the numbered steps, but advice has no order, so the step
+   number becomes an icon that says what the line is about. */
+.w-tips {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0;
+  padding: 18px 20px;
+  border-radius: var(--radius-sm);
+  background: var(--lime);
+}
+
+/* The text lives in its own <span>: with the icon as a sibling, any inline
+   tag left loose in the <li> would become a flex item of its own and break
+   onto a line by itself. */
+.w-tips li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  line-height: 1.45;
+}
+
+/* pine on lime is 6.58, well past the 3.0 a graphic needs. */
+.w-tips .w-i {
+  margin-top: 2px;
+  color: var(--pine);
 }
 
 .w-howto kbd {
