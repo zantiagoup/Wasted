@@ -102,4 +102,4 @@ Interlineado de cuerpo: 1.7 en pantalla, 1.62 impreso.
 
 **Card de cierre:** bloque `--forest` con esquinas de 28 px, sombra suave y todo centrado, del ancho completo de la columna de contenido (las dos columnas de la retícula, `grid-column: 1 / -1`). Dentro va el lockup invertido y el eslogan. En impresión pierde la sombra y baja a 7 mm de radio.
 
-`../entregables/html design/wasted.html` es la implementación viva del sistema: portada con el lockup, isótipo como marca en cada sección, entradas con filete `--sage`, citas sobre `--lime` y ligas en `--pine`. Cualquier pieza nueva copia esos patrones antes de inventar otros.
+`../entregables/html design/wasted_FixedProposal.html` es la implementación viva del sistema: portada con el lockup, isótipo como marca en cada sección, entradas con filete `--sage`, citas sobre `--lime` y ligas en `--pine`. Cualquier pieza nueva copia esos patrones antes de inventar otros.
