@@ -155,7 +155,7 @@ input:focus-visible {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 20px 0 14px;
+  padding: 24px 0 34px;
 }
 
 .w-topbar__mark {
@@ -205,7 +205,7 @@ input:focus-visible {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 /* Pushes the last block of a tile down so rows of tiles line up at the base. */
@@ -219,7 +219,7 @@ input:focus-visible {
 .w-stack {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
   height: 100%;
 }
 
@@ -406,7 +406,7 @@ input:focus-visible {
   position: relative;
   display: grid;
   place-items: center;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 5 / 6;
   padding: 30px;
   border-radius: var(--radius-lg);
   background: var(--forest);
@@ -767,8 +767,16 @@ input:focus-visible {
 /* 15. Wide view --------------------------------------------------------- */
 
 @media (min-width: 992px) {
+  .w-topbar {
+    padding: 34px 0 48px;
+  }
+
+  .w-stack {
+    gap: 24px;
+  }
+
   .w-tile {
-    padding: 26px;
+    padding: 28px;
   }
 
   /* Portrait on a phone, landscape on a desktop: otherwise the viewfinder
