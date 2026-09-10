@@ -24,9 +24,26 @@
       color: #132a13;
     }
 
+    h1 {
+      margin: 0 0 4px;
+      font-size: 20px;
+      letter-spacing: -0.03em;
+    }
+
+    p.lede {
+      max-width: 60ch;
+      margin: 0 0 28px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #31572c;
+    }
+
     h2 {
-      margin: 28px 0 8px;
-      font-size: 15px;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin: 0 0 6px;
+      font-size: 14px;
       font-weight: 700;
       letter-spacing: -0.01em;
     }
@@ -34,6 +51,56 @@
     h2 small {
       font-weight: 400;
       color: #4f772d;
+    }
+
+    h2 b {
+      margin-left: auto;
+      font-variant-numeric: tabular-nums;
+      font-size: 12px;
+      font-weight: 500;
+      color: #4f772d;
+    }
+
+    .pair {
+      width: 285px;
+      margin: 0 0 26px;
+      background: #fff;
+      box-shadow: 0 0 0 1px rgba(19, 42, 19, 0.12);
+    }
+
+    .pair img {
+      display: block;
+      width: 285px;
+      height: 107px;
+    }
+
+    .pair .tag {
+      padding: 3px 8px;
+      background: #ecf39e;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 26px;
+    }
+
+    .zoom {
+      width: 570px;
+      overflow: hidden;
+    }
+
+    .zoom > * {
+      transform: scale(2);
+      transform-origin: 0 0;
+    }
+
+    .zoom {
+      height: 216px;
     }
 
     /* The stage matches the reference crop exactly: 285x108 CSS px, which is
@@ -165,16 +232,14 @@
        ==================================================================== */
     .v2 .pill {
       background: var(--paper);
-      box-shadow: 0 18px 34px -16px rgba(19, 42, 19, 0.42), 0 2px 6px -2px rgba(19, 42, 19, 0.18),
-        0 0.5px 0.5px rgba(19, 42, 19, 0.16);
+      box-shadow: inset 0 0 0 0.5px rgba(19, 42, 19, 0.07), 0 18px 34px -16px rgba(19, 42, 19, 0.42), 0 2px 6px -2px rgba(19, 42, 19, 0.18);
     }
 
     .v2 .fab {
-      background: radial-gradient(circle 70px at 29% 25%, #8da261 0%, #799054 17%, #587240 32%, #3a5630 46%,
-          #2e4426 60%, #1b2a17 75%, #14200f 100%);
-      box-shadow: inset 0 1.5px 2px rgba(236, 243, 158, 0.36), inset 0 -3px 5px rgba(0, 0, 0, 0.3),
-        0 16px 28px -12px rgba(19, 42, 19, 0.62), 0 4px 8px -3px rgba(19, 42, 19, 0.45),
-        0 0.5px 0.5px rgba(19, 42, 19, 0.3);
+      background: radial-gradient(ellipse 54px 50px at 33% 25%, #93a765 0%, #889d5d 10%, #7a9155 20%,
+          #667e48 32%, #526c3d 44%, #3b5630 56%, #334c2b 68%, #293e23 80%, #20311b 92%, #182513 100%);
+      box-shadow: inset 0 1.5px 2px rgba(236, 243, 158, 0.36), inset 0 -1.5px 2px rgba(0, 0, 0, 0.22),
+        inset 0 0 0 0.5px rgba(19, 42, 19, 0.35), 0 16px 28px -12px rgba(19, 42, 19, 0.62), 0 4px 8px -3px rgba(19, 42, 19, 0.45);
     }
 
     /* ====================================================================
@@ -189,20 +254,10 @@
     }
 
     .v3 .fab {
-      position: absolute;
-      background: radial-gradient(circle 78px at 34% 30%, #7a9155 0%, #587240 34%, #35502c 62%, #1b2a17 86%,
-          #14200f 100%);
+      background: radial-gradient(ellipse 54px 50px at 33% 25%, #93a765 0%, #6e864d 27%, #4a6539 48%,
+          #2f4628 73%, #182513 100%);
       box-shadow: inset 0 1.5px 2px rgba(236, 243, 158, 0.36), inset 0 -1.5px 2px rgba(0, 0, 0, 0.22),
         0 16px 28px -12px rgba(19, 42, 19, 0.62), 0 4px 8px -3px rgba(19, 42, 19, 0.45);
-    }
-
-    .v3 .fab::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: radial-gradient(circle 34px at 29% 25%, rgba(144, 169, 85, 0.55) 0%, rgba(144, 169, 85, 0.2) 52%,
-          rgba(144, 169, 85, 0) 100%);
     }
 
     /* ====================================================================
@@ -227,11 +282,10 @@
     }
 
     .v4 .fab {
-      background: radial-gradient(circle 70px at 29% 25%, #8da261 0%, #799054 17%, #587240 32%, #3a5630 46%,
-          #2e4426 60%, #1b2a17 75%, #14200f 100%);
-      box-shadow: inset 0 1.5px 2px rgba(236, 243, 158, 0.36), inset 0 -1.5px 2px rgba(0, 0, 0, 0.22),
-        inset 0 0 0 1px rgba(236, 243, 158, 0.12), 0 16px 28px -12px rgba(19, 42, 19, 0.62),
-        0 4px 8px -3px rgba(19, 42, 19, 0.45);
+      background: radial-gradient(ellipse 54px 50px at 33% 25%, #93a765 0%, #889d5d 10%, #7a9155 20%,
+          #667e48 32%, #526c3d 44%, #3b5630 56%, #334c2b 68%, #293e23 80%, #20311b 92%, #182513 100%);
+      box-shadow: inset 0 1.5px 2px rgba(236, 243, 158, 0.4), inset 0 -1.5px 2px rgba(0, 0, 0, 0.22),
+        inset 0 0 0 1px rgba(236, 243, 158, 0.14), 0 16px 28px -12px rgba(19, 42, 19, 0.62), 0 4px 8px -3px rgba(19, 42, 19, 0.45);
     }
 
     /* ====================================================================
@@ -244,9 +298,11 @@
     }
 
     .v5 .fab {
-      background: radial-gradient(circle 70px at 29% 25%, #8da261 0%, #799054 17%, #587240 32%, #3a5630 46%,
-          #2e4426 60%, #1b2a17 75%, #14200f 100%);
-      box-shadow: inset 0 1.5px 2px rgba(236, 243, 158, 0.4), inset 0 -2px 3px rgba(0, 0, 0, 0.24),
+      /* The ten stops are the mean colour of ten concentric rings sampled off
+         the reference; the ellipse geometry is the least-squares best fit. */
+      background: radial-gradient(ellipse 54px 50px at 33% 25%, #93a765 0%, #889d5d 10%, #7a9155 20%,
+          #667e48 32%, #526c3d 44%, #3b5630 56%, #334c2b 68%, #293e23 80%, #20311b 92%, #182513 100%);
+      box-shadow: inset 0 1px 2px rgba(236, 243, 158, 0.55), inset 0 -4px 8px rgba(0, 0, 0, 0.22),
         0 16px 28px -12px rgba(19, 42, 19, 0.62), 0 4px 8px -3px rgba(19, 42, 19, 0.45);
     }
 
@@ -282,69 +338,119 @@
     </symbol>
   </svg>
 
-  <h2>V0 <small>— what ships today</small></h2>
-  <div class="v0">
-    <div class="stage" id="s-v0">
-      <div class="pill">
-        <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
-        <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
+  <h1>Bottom nav — five takes on the reference</h1>
+  <p class="lede">Each block stacks the reference render on top of a variant, drawn at the exact
+    coordinates measured off the reference PNG. The numbers are mean absolute error per channel
+    against that PNG, out of 255: one for the sphere's surface, one for every shadow pixel around
+    both shapes. Lower is closer.</p>
+
+  <div class="grid">
+    <div>
+      <h2>V0 <small>&mdash; what the app ships today</small><b>sphere 4.46 &middot; shadows 0.63</b></h2>
+      <div class="pair v0">
+        <div class="tag">reference</div>
+        <img src="lab-ref.png" alt="Reference render of the bottom navigation">
+        <div class="tag">V0</div>
+        <div class="stage" id="s-v0">
+          <div class="pill">
+            <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
+            <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
+          </div>
+          <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
+        </div>
       </div>
-      <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
+    </div>
+    <div>
+      <h2>V1 <small>&mdash; circular gradient, first fit</small><b>sphere 4.99 &middot; shadows 0.22</b></h2>
+      <div class="pair v1">
+        <div class="tag">reference</div>
+        <img src="lab-ref.png" alt="Reference render of the bottom navigation">
+        <div class="tag">V1</div>
+        <div class="stage" id="s-v1">
+          <div class="pill">
+            <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
+            <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
+          </div>
+          <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2>V2 <small>&mdash; V5 plus a hairline edge on both shapes</small><b>sphere 2.36 &middot; shadows 0.26</b></h2>
+      <div class="pair v2">
+        <div class="tag">reference</div>
+        <img src="lab-ref.png" alt="Reference render of the bottom navigation">
+        <div class="tag">V2</div>
+        <div class="stage" id="s-v2">
+          <div class="pill">
+            <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
+            <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
+          </div>
+          <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2>V3 <small>&mdash; the fitted ellipse cut down to 5 stops</small><b>sphere 2.80 &middot; shadows 0.22</b></h2>
+      <div class="pair v3">
+        <div class="tag">reference</div>
+        <img src="lab-ref.png" alt="Reference render of the bottom navigation">
+        <div class="tag">V3</div>
+        <div class="stage" id="s-v3">
+          <div class="pill">
+            <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
+            <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
+          </div>
+          <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2>V4 <small>&mdash; real Liquid Glass, over a tinted backdrop</small><b>sphere 2.47 &middot; shadows n/a</b></h2>
+      <div class="pair v4">
+        <div class="tag">reference</div>
+        <img src="lab-ref.png" alt="Reference render of the bottom navigation">
+        <div class="tag">V4</div>
+        <div class="stage" id="s-v4">
+          <div class="pill">
+            <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
+            <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
+          </div>
+          <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2>V5 <small>&mdash; the candidate: fitted ellipse, 10 stops</small><b>sphere 2.13 &middot; shadows 0.22</b></h2>
+      <div class="pair v5">
+        <div class="tag">reference</div>
+        <img src="lab-ref.png" alt="Reference render of the bottom navigation">
+        <div class="tag">V5</div>
+        <div class="stage" id="s-v5">
+          <div class="pill">
+            <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
+            <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
+          </div>
+          <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
+        </div>
+      </div>
     </div>
   </div>
 
-  <h2>V1 <small>— direct fit off the reference</small></h2>
-  <div class="v1">
-    <div class="stage" id="s-v1">
-      <div class="pill">
-        <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
-        <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
-      </div>
-      <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
-    </div>
-  </div>
+  <h2 style="margin-top:12px">Reference at 2&times;</h2>
+  <div class="pair" style="width:570px;margin-bottom:26px"><img src="lab-ref.png"
+      style="width:570px;height:214px" alt="Reference render at 2x"></div>
 
-  <h2>V2 <small>— V1 plus the contact edge</small></h2>
-  <div class="v2">
-    <div class="stage" id="s-v2">
-      <div class="pill">
-        <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
-        <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
+  <h2>V5 at 2&times;</h2>
+  <div class="pair v5" style="width:570px">
+    <div class="zoom">
+      <div class="stage">
+        <div class="pill">
+          <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
+          <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
+        </div>
+        <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
       </div>
-      <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
-    </div>
-  </div>
-
-  <h2>V3 <small>— two-layer sphere light</small></h2>
-  <div class="v3">
-    <div class="stage" id="s-v3">
-      <div class="pill">
-        <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
-        <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
-      </div>
-      <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
-    </div>
-  </div>
-
-  <h2>V4 <small>— real Liquid Glass, needs something behind it</small></h2>
-  <div class="v4">
-    <div class="stage" id="s-v4">
-      <div class="pill">
-        <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
-        <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
-      </div>
-      <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
-    </div>
-  </div>
-
-  <h2>V5 <small>— the candidate</small></h2>
-  <div class="v5">
-    <div class="stage" id="s-v5">
-      <div class="pill">
-        <span class="item"><svg class="i"><use href="#i-user" /></svg></span>
-        <span class="item item--on"><svg class="i"><use href="#i-history" /></svg>History</span>
-      </div>
-      <span class="fab"><svg class="i"><use href="#i-camera" /></svg></span>
     </div>
   </div>
 

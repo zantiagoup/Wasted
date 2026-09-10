@@ -662,7 +662,7 @@ input:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  gap: 22px;
   padding: 0 16px;
   pointer-events: none;
 }
@@ -736,6 +736,8 @@ input:focus-visible {
     0 16px 28px -12px rgba(19, 42, 19, 0.62), 0 4px 8px -3px rgba(19, 42, 19, 0.45);
   color: var(--lime);
   transition: transform 0.12s ease, box-shadow 0.12s ease;
+  --fab-scale: 1;
+  transform: scale(var(--fab-scale));
 }
 
 .w-nav__fab::after {
@@ -755,12 +757,12 @@ input:focus-visible {
 }
 
 .w-nav__fab:hover {
-  transform: translateY(-1px);
+  transform: translateY(-1px) scale(var(--fab-scale));
 }
 
 /* Pressed: the sphere sinks, so it loses cast shadow and gains inner shade. */
 .w-nav__fab:active {
-  transform: translateY(3px);
+  transform: translateY(3px) scale(var(--fab-scale));
   box-shadow: 0 -8px 16px -8px rgba(0, 0, 0, 0.9) inset, 0 6px 12px -8px rgba(19, 42, 19, 0.5);
 }
 
@@ -841,6 +843,23 @@ input:focus-visible {
   font-weight: 500;
 }
 
+.w-nav__fab--active {
+  --fab-scale: 1.25;
+  margin-left: 10px;
+  background: radial-gradient(circle at 34% 27%, #ecf39e 0%, #90a955 55%, #4f772d 100%);
+  box-shadow: 0 1.5px 1px rgba(255, 255, 255, 0.7) inset, 0 -12px 20px -10px rgba(19, 42, 19, 0.7) inset,
+    0 16px 28px -12px rgba(19, 42, 19, 0.55), 0 4px 8px -3px rgba(19, 42, 19, 0.4);
+  color: var(--forest);
+}
+
+.w-nav__fab--active::after {
+  background: radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 46%);
+}
+
+.w-nav__fab--active:hover {
+  color: var(--forest);
+}
+
 /* 15. Wide view --------------------------------------------------------- */
 
 @media (min-width: 992px) {
@@ -869,7 +888,7 @@ input:focus-visible {
 
 @media (max-width: 400px) {
   .w-nav {
-    gap: 10px;
+    gap: 18px;
   }
 
   .w-nav__item {

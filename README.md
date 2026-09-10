@@ -73,6 +73,12 @@ bottom for the bevel, a cast shadow underneath, and a `::after` layer carrying t
 highlight. Pressing it drops the cast shadow and deepens the inner shade. All four greens come
 from the palette.
 
+On Scan the sphere is the shutter rather than a link elsewhere, so it grows by a quarter and
+flips: light greens with a forest icon instead of dark greens with a lime one. Forest on sage
+is 5.84 and on lime 13.07, both AA. The scale lives in a `--fab-scale` variable so hover and
+press compose with it instead of overwriting the transform, and a small left margin buys back
+the width the scale eats out of the gap next to the pill.
+
 ### The desktop notice
 
 Set up shows a dialog when it is opened on a computer, explaining how to switch the browser into
