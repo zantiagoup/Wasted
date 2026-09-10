@@ -20,7 +20,7 @@ observations and the privacy decisions, is `entregables/wasted_FixedProposal.pdf
 | File | Screen | What it is |
 |---|---|---|
 | `wasted/index.html` | Set up | Runs once. Asks for the locality and the two permissions. Nothing works without a locality: every rule and every drop-off point depends on it. |
-| `wasted/scan.html` | Scan | The app itself. Viewfinder, shutter, and two alternate entrances for when there is no photo. |
+| `wasted/scan.html` | Scan | The app itself. Viewfinder plus two alternate entrances for when there is no photo. The round button in the bar is the shutter here. |
 | `wasted/result.html` | Result | Material, category, confidence, preparation, map preview and route. Not a menu item: it is a screen shared by Scan and History. |
 | `wasted/history.html` | History | Every classified item as a card, plus the streak. Opening a card reopens the Result screen. |
 | `wasted/profile.html` | Profile | Locality, permissions, what is stored and how to delete it. |
@@ -43,11 +43,35 @@ match against.
   integrity). Every Bootstrap component is deliberately unused: the look comes from our own
   design system.
 - **Satoshi** from Fontshare, weights 400/500/700.
+- **Lucide** icons, inlined as one `<symbol>` sprite per page so they inherit the colour of
+  whatever surface they sit on.
 - One external stylesheet, `wasted/css/wasted.css`, holding every reusable element:
-  bottom navigation, card, chip, button, form field, permission switch, history entry,
-  viewfinder, map box.
+  bottom navigation, tile, chip, button, form field, permission switch, history entry,
+  viewfinder, map box, notice.
 - Colour comes only from `design-system/DESIGN_SYSTEM.md`: five greens and white. No support
   colour, no neutral grey.
+
+### Three rules the layout follows
+
+**Nothing is outlined.** Groups are drawn with a contrasting surface instead of a border, and
+every pairing passes WCAG AA: lime with forest text (13.07), forest with lime (13.07), and moss
+with white (5.24), which is reserved for notices. Moss as a surface is the one addition we made
+to the design system; everything else was already documented.
+
+**Notices look like notices.** Anything that is a caveat rather than content sits on moss with
+an info icon, so a disclaimer can never be mistaken for an answer.
+
+**Tiles in a row end at the same line.** Each column is a flex stack; the tile marked `w-grow`
+absorbs the leftover height, and `w-tile__foot` pins the action row to the bottom, so buttons
+across a row line up instead of floating wherever their text ends.
+
+### The primary button
+
+The round scan button is shaded like a sphere rather than filled flat: a radial gradient with
+its focal point up and to the left, an inset highlight at the top with an inset shade at the
+bottom for the bevel, a cast shadow underneath, and a `::after` layer carrying the specular
+highlight. Pressing it drops the cast shadow and deepens the inner shade. All four greens come
+from the palette.
 
 ### What is not wired up yet
 
