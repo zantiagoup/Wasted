@@ -1,0 +1,5 @@
+# Fuente del documento: se versiona el PDF, no el HTML ni el script de export.
+html design/
+
+.DS_Store
+node_modules/
