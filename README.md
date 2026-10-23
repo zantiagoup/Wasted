@@ -10,10 +10,11 @@ Andres Garcia Gonzalez · Zantiago Vargas Beltran · Pedro Chucuan Gerardo.
 Addresses **SDG 12** (Responsible Consumption and Production) and, in part, **SDG 11**
 (Sustainable Cities and Communities).
 
-## First delivery — prototype
+## Second delivery — beta
 
-Live site: `wasted/index.html` is the entry point. The written proposal, with the professor's
-observations and the privacy decisions, is `entregables/wasted_FixedProposal.pdf`.
+Live site: **https://wasted-webdev-project.onrender.com** (Express on Render's free plan). The
+written proposal, with the professor's observations and the privacy decisions, is
+`entregables/wasted_FixedProposal.pdf`.
 
 ### Screens
 
@@ -22,9 +23,9 @@ observations and the privacy decisions, is `entregables/wasted_FixedProposal.pdf
 | `wasted/landing.html` | Landing | A product page for computers: hero, two feature tiles, the authorised drop-off points, the way in and a footer. Its screenshots are real captures of the app. "Get the app" opens Set up, and `/` redirects here. |
 | `wasted/index.html` | Set up | Runs once. Asks for the city and the two permissions. Nothing works without a city: every rule and every drop-off point depends on it. Also carries the desktop notice below. |
 | `wasted/scan.html` | Scan | The app itself. Viewfinder plus two alternate entrances for when there is no photo. The round button in the bar is the shutter here. |
-| `wasted/result.html` | Result | Material, category, confidence, preparation, map preview and route. Not a menu item: it is a screen shared by Scan and History. |
-| `wasted/history.html` | History | Every classified item as a card, plus the streak. Opening a card reopens the Result screen. |
-| `wasted/profile.html` | Profile | Locality, permissions, what is stored and how to delete it. |
+| `wasted/result.html` | Result | Material, category, confidence, preparation, the closest drop-off point and the route to it. "No" lets the user correct the category. Not a menu item: it is a screen shared by Scan and History. |
+| `wasted/history.html` | History | Every classified item as a card, plus the streak. Opening a card reopens the Result screen for that item. |
+| `wasted/profile.html` | Profile | Scan count, kg of CO₂ avoided, a badge every 10 scans, locality, permissions, and how to delete the history. |
 
 ### Navigation
 
@@ -34,14 +35,16 @@ button on the right, because it is the only thing the app really does. On the Sc
 same button becomes the shutter, so taking a photo costs one tap from anywhere in the app.
 
 Search is not a module: when there is no photo, the text entry inside Scan leads to the same
-Result screen. Neither is the map: it lives inside Result, where a category already exists to
-match against.
+Result screen. Neither is the drop-off point: it lives inside Result, where a category already
+exists to match against.
 
 ### How it is built
 
 - Static HTML5 pages, no build step, no frontend framework.
-- A small **Express** server (`server.js`) serves the pages and the API. `routes/scanRoutes.js`
-  holds `POST /api/scan`, and `services/gemini-service.js` talks to Gemini.
+- A small **Express** server (`server.js`) serves the pages and our API. Each route lives in
+  `routes/` and the code that talks to an outside API lives in `services/`:
+  - `routes/scanRoutes.js` → `services/gemini-service.js` (and `services/demo-service.js` without a key)
+  - `routes/pointsRoutes.js` → `services/points-service.js`
 - **Bootstrap 5.3.8 grid only** (`bootstrap-grid.min.css` from jsDelivr, with subresource
   integrity). Every Bootstrap component is deliberately unused: the look comes from our own
   design system.
@@ -50,7 +53,7 @@ match against.
   whatever surface they sit on.
 - One external stylesheet, `wasted/css/wasted.css`, holding every reusable element:
   bottom navigation, tile, chip, button, form field, permission switch, history entry,
-  viewfinder, map box, notice.
+  viewfinder, drop-off point, notice.
 - Colour comes only from `design-system/DESIGN_SYSTEM.md`: six tones on one
   green axis, and each surface always takes the same text colour (see the pairings table there).
 
@@ -107,48 +110,90 @@ Scan has three ways in, and all three end in `POST /api/scan`:
 
 The server asks Gemini for a fixed JSON shape (name, category, confidence, description, steps),
 and `wasted/js/result.js` fills the Result screen with it. Below 70% confidence the screen still
-says what we think it is, with a warning. Every answer is saved in the browser's `localStorage`
-as a plain list (`wasted-history`), which History and Profile read for the list, the streak and
-the count. The photo is never stored.
-
-### Where to take it
-
-When the server starts, `services/points-service.js` downloads SEMADET's register of authorised
-collection and recycling sites from the Jalisco map server (524 points, one GeoJSON request).
-Result asks the browser for the user's location and calls `GET /api/points?category=&lat=&lng=`,
-which returns the closest point whose list of accepted waste mentions that category. The screen
-shows its name, address and distance, and the Google Maps and Waze buttons open the route to it.
-No API key is needed for any of this.
+says what we think it is, with a warning.
 
 The free models are tried in order: `gemini-3.8-flash`, `gemini-3.6-flash`,
 `gemini-3.5-flash-lite`, `gemini-3.1-flash-lite`. If one is busy, out of quota, or takes more than
 15 seconds, the next one answers. A wrong key or a bad request stops right away.
 
+### History, streak and corrections
+
+Every answer is saved in the browser's `localStorage` as a plain list (`wasted-history`), and
+Result opens one of them by its position (`result.html?item=3`). History draws the list and
+counts the streak: days in a row with at least one scan. Profile counts the scans, the kg of CO₂
+avoided and the badges. If the answer is wrong, "No" on Result shows the eight categories; the
+choice replaces the category in that same entry and the closest point is looked up again. There
+is no database yet, so the history lives only in that browser. The photo is never stored.
+
+### Where to take it
+
+When the server starts, `services/points-service.js` downloads SEMADET's register of authorised
+collection and recycling sites from the Jalisco map server (524 points, one GeoJSON request).
+The user's location does not affect this download: it happens once, from our server, before
+anyone opens the app. What matters is where the server runs. From Mexico the Jalisco server
+answers in under a second, but it may not answer requests from abroad, and Render's free servers
+are in the US. If the download fails, `/api/points` has no points to search and Result says there
+is no drop-off point for that item; the rest of the app keeps working. Running the server locally
+(`npm start`) shows the points.
+Result asks the browser for the user's location and calls `GET /api/points?category=&lat=&lng=`,
+which returns the closest point whose list of accepted waste mentions that category. The screen
+shows its name, address and distance, and the Google Maps and Waze buttons open the route to it.
+No API key is needed for any of this. The register has no company names, so a point shows its
+activity and municipality (for example "Acopio · Guadalajara").
+
+### APIs
+
+Our own endpoints, served by Express:
+
+| Endpoint | Receives | Returns |
+|---|---|---|
+| `POST /api/scan` | JSON with `image` (base64 JPEG) or `text` | `{ name, category, confidence, description, steps }` |
+| `GET /api/points` | `category`, `lat`, `lng` in the query string | `{ name, address, distance, lat, lng }` of the closest point |
+
+External APIs the project connects to:
+
+| API | Used for | Key |
+|---|---|---|
+| [Google Gemini API](https://ai.google.dev/gemini-api/docs) through the `@google/genai` SDK | Identifying the item from the photo or the text | `GEMINI_API_KEY`, free tier from Google AI Studio |
+| [SEMADET Jalisco GeoServer](https://mapa.jalisco.gob.mx) (WFS, layers `vjal:C601` to `vjal:C605`) | The 524 authorised collection and recycling sites, as GeoJSON | None |
+| Google Maps and Waze route links | Opening the route to the drop-off point | None |
+
+Browser APIs: `getUserMedia` for the camera, `Geolocation` for the user's position and
+`localStorage` for the history.
+
 ### What is not wired up yet
 
-Screens showing invented data say so on the screen. The chart in History and the
-settings in Set up and Profile are the next delivery; the category illustrations are flat placeholders that
+Screens showing invented data say so on the screen. The city and permission switches in Set up
+and Profile are still visual only; the category illustrations are flat placeholders that
 will be replaced by 3D renders exported as static images.
 
 ### Running it locally
 
-Requires Node.js 20 or later and a free Gemini key from
+Requires Node.js 22.9 or later and a free Gemini key from
 [Google AI Studio](https://aistudio.google.com/apikey).
 
 ```bash
 npm install
 cp .env.example .env   # then paste the key after GEMINI_API_KEY=
 npm start
-# then open http://localhost:3000/wasted/
+# then open http://localhost:3000
 ```
 
 Without a key the server still runs in **demo mode**: `services/demo-service.js` answers every scan
 with one of five sample items (a typed description picks the matching one), and the Result screen
 says it is a demo answer. This lets the whole flow be tested without Gemini.
 
-GitHub Pages only serves static files, so the published site shows the screens but cannot scan:
-scanning needs this server running.
+### Deploying on Render
+
+A free **Web Service** connected to this repository, branch `main`, with the Root Directory left
+empty, Build Command `npm install` and Start Command `npm start`. The only environment variable is
+`GEMINI_API_KEY`; Render sets `PORT` itself. On the free plan the service sleeps after 15 minutes
+without visits, so the first request after that takes about a minute.
+
+GitHub Pages only serves static files, so a copy published there shows the screens but cannot
+scan.
 
 ### AI usage
 
-Logged prompt by prompt in `PROMPT_LOG.md`.
+Logged prompt by prompt in `PROMPT_LOG.md` (first delivery) and `PROMPT_LOG_SECOND_DELIVERY.md`
+(second delivery).
