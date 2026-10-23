@@ -84,8 +84,22 @@
               <div class="w-tile__foot">
                 <div class="w-btn-row">
                   <a class="w-btn w-btn--small" href="history.html"><svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Yes</a>
-                  <a class="w-btn w-btn--soft w-btn--small" href="scan.html"><svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-close"/></svg>No</a>
+                  <a class="w-btn w-btn--soft w-btn--small" href="scan.html" id="answer-no"><svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-close"/></svg>No</a>
                 </div>
+                <form id="correct-form" style="display:none; margin-top:16px">
+                  <label class="w-sr" for="correct-category">What is it then?</label>
+                  <select class="w-select" id="correct-category">
+                    <option>PET</option>
+                    <option>Glass</option>
+                    <option>Aluminium</option>
+                    <option>Cardboard</option>
+                    <option>Paper</option>
+                    <option>Organic</option>
+                    <option>Electronics</option>
+                    <option>Hazardous</option>
+                  </select>
+                  <button class="w-btn w-btn--small" type="submit" style="margin-top:12px">Save</button>
+                </form>
               </div>
             </div>
 

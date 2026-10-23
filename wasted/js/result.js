@@ -22,17 +22,17 @@
   document.getElementById("result-description").textContent = result.description;
 
   // Below 70% we still say what we think it is, but warn the user.
-  if (result.confidence < 70) {
+  if (result.confidence < 70 && !result.corrected) {
     document.getElementById("low-confidence").style.display = "";
   }
 
   var list = document.getElementById("result-steps");
   list.innerHTML = "";
   for (var i = 0; i < result.steps.length; i++) {
-    var item = document.createElement("li");
-    item.innerHTML = '<svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>';
-    item.append(result.steps[i]);
-    list.appendChild(item);
+    var step = document.createElement("li");
+    step.innerHTML = '<svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>';
+    step.append(result.steps[i]);
+    list.appendChild(step);
   }
 
   var pointName = document.getElementById("point-name");
@@ -75,5 +75,24 @@
   navigator.geolocation.getCurrentPosition(showNearestPoint, function () {
     pointName.textContent = "Turn on your location to see the closest point.";
   
+  });
+
+  // "No" lets the user pick the right category. We save it in the same
+  // history item and reload, so the screen and the closest point update.
+  var correctForm = document.getElementById("correct-form");
+  var correctCategory = document.getElementById("correct-category");
+  correctCategory.value = result.category;
+
+  document.getElementById("answer-no").addEventListener("click", function (event) {
+    event.preventDefault();
+    correctForm.style.display = "";
+  });
+
+  correctForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    result.category = correctCategory.value;
+    result.corrected = true;
+    localStorage.setItem("wasted-history", JSON.stringify(history));
+    window.location.reload();
   });
 })();
