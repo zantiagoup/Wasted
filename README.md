@@ -105,8 +105,19 @@ Scan has three ways in, and all three end in `POST /api/scan`:
 - **Type it.** The text in the dialog.
 
 The server asks Gemini for a fixed JSON shape (name, category, confidence, description, steps),
-and `wasted/js/result.js` fills the Result screen with it. The answer travels between the two
-screens in `sessionStorage`; the photo is never stored.
+and `wasted/js/result.js` fills the Result screen with it. Below 70% confidence the screen still
+says what we think it is, with a warning. Every answer is saved in the browser's `localStorage`
+as a plain list (`wasted-history`), which History and Profile read for the list, the streak and
+the count. The photo is never stored.
+
+### Where to take it
+
+When the server starts, `services/points-service.js` downloads SEMADET's register of authorised
+collection and recycling sites from the Jalisco map server (524 points, one GeoJSON request).
+Result asks the browser for the user's location and calls `GET /api/points?category=&lat=&lng=`,
+which returns the closest point whose list of accepted waste mentions that category. The screen
+shows its name, address and distance, and the Google Maps and Waze buttons open the route to it.
+No API key is needed for any of this.
 
 The free models are tried in order: `gemini-3.8-flash`, `gemini-3.6-flash`,
 `gemini-3.5-flash-lite`, `gemini-3.1-flash-lite`. If one is busy, out of quota, or takes more than
@@ -114,8 +125,8 @@ The free models are tried in order: `gemini-3.8-flash`, `gemini-3.6-flash`,
 
 ### What is not wired up yet
 
-Screens showing invented data say so on the screen. The SEMADET matching, the map, History and
-the streak counter are the next delivery; the category illustrations are flat placeholders that
+Screens showing invented data say so on the screen. The chart in History and the
+settings in Set up and Profile are the next delivery; the category illustrations are flat placeholders that
 will be replaced by 3D renders exported as static images.
 
 ### Running it locally

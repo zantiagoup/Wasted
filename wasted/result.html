@@ -37,31 +37,22 @@
               </div>
             </div>
 
+            <div class="w-note" id="low-confidence" style="display:none"><svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><p>We are not sure about this one. Check it, or try another photo with better light.</p></div>
+
             <div class="w-tile w-grow">
               <div class="w-tile__head"><svg class="w-i w-i--lg" aria-hidden="true" focusable="false"><use href="#i-route"/></svg><h2>Where to take it</h2></div>
-              <svg class="w-map" viewBox="0 0 400 170" role="img"
-                aria-label="Map. The closest place to drop this off is 1.2 kilometres away.">
-                <rect width="400" height="170" fill="#ffffff"/>
-                <g stroke="#ecf39e" stroke-width="11" stroke-linecap="square">
-                  <path d="M0 52h400M0 126h400M96 0v170M268 0v170"/>
-                </g>
-                <g stroke="#ecf39e" stroke-width="5">
-                  <path d="M0 89h400M186 0v170M340 52v74"/>
-                </g>
-                <path d="M96 126h172V52" fill="none" stroke="#90a955" stroke-width="6" stroke-linecap="round"/>
-                <circle cx="96" cy="126" r="9" fill="#4f772d"/>
-                <path d="M268 35a17 17 0 0 0-17 17c0 12 17 30 17 30s17-18 17-30a17 17 0 0 0-17-17z" fill="#132a13"/>
-                <circle cx="268" cy="52" r="6.5" fill="#ecf39e"/>
-              </svg>
               <div class="w-point">
-                <span class="w-point__distance">1.2 km</span>
-                <p class="w-point__name">Punto Limpio Chapultepec</p>
+                <span class="w-point__distance" id="point-distance">1.2 km</span>
+                <div>
+                  <p class="w-point__name" id="point-name">Acopio · Guadalajara</p>
+                  <p class="w-point__address" id="point-address">Av. Example 123, Col. Centro</p>
+                </div>
               </div>
               <div class="w-tile__foot">
                 <div class="w-btn-row">
-                  <a class="w-btn w-btn--soft w-btn--small" href="https://www.google.com/maps"
+                  <a class="w-btn w-btn--soft w-btn--small" id="point-maps" href="https://www.google.com/maps"
                     rel="noopener"><svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-route"/></svg>Google Maps</a>
-                  <a class="w-btn w-btn--soft w-btn--small" href="https://waze.com/ul"
+                  <a class="w-btn w-btn--soft w-btn--small" id="point-waze" href="https://waze.com/ul"
                     rel="noopener"><svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-route"/></svg>Waze</a>
                 </div>
               </div>
@@ -98,7 +89,7 @@
               </div>
             </div>
 
-            <div class="w-note"><svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><p>Example only. The real places come from the Jalisco government list.</p></div>
+            <div class="w-note"><svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><p>Places come from the SEMADET list of authorised sites. Some only take large amounts.</p></div>
 
           </div>
         </div>

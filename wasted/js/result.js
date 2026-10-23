@@ -8,15 +8,23 @@
 (function () {
   "use strict";
 
-  var saved = sessionStorage.getItem("wasted-result");
-  if (!saved) return;
-  var result = JSON.parse(saved);
+  // result.html?item=3 shows the fourth thing in the history. Without it, the example stays.
+  var history = JSON.parse(localStorage.getItem("wasted-history")) || [];
+  var item = new URLSearchParams(window.location.search).get("item");
+  
+  var result = history[item];
+  if (!result) return;
 
   document.getElementById("result-category").textContent = result.category;
   document.getElementById("result-name").textContent = result.name;
   document.getElementById("confidence").textContent = "We are " + result.confidence + "% sure";
   document.getElementById("result-meter").style.width = result.confidence + "%";
   document.getElementById("result-description").textContent = result.description;
+
+  // Below 70% we still say what we think it is, but warn the user.
+  if (result.confidence < 70) {
+    document.getElementById("low-confidence").style.display = "";
+  }
 
   var list = document.getElementById("result-steps");
   list.innerHTML = "";
@@ -26,4 +34,46 @@
     item.append(result.steps[i]);
     list.appendChild(item);
   }
+
+  var pointName = document.getElementById("point-name");
+  var pointAddress = document.getElementById("point-address");
+  var pointDistance = document.getElementById("point-distance");
+  pointName.textContent = "Looking for the closest point…";
+  pointAddress.textContent = "";
+  pointDistance.textContent = "–";
+
+  // Asks our server for the closest point that takes this category, and
+  // points the Google Maps and Waze buttons at it.
+
+
+  async function showNearestPoint(position) {
+    try {
+      var response = await fetch("/api/points?category=" + result.category +
+        "&lat=" + position.coords.latitude + "&lng=" + position.coords.longitude);
+      
+        var point = await response.json();
+
+      if (!response.ok) {
+        pointName.textContent = point.error;
+      
+        return;
+      
+      }
+    
+      pointName.textContent = point.name;
+      pointAddress.textContent = point.address;
+      
+      pointDistance.textContent = point.distance.toFixed(1) + " km";
+      document.getElementById("point-maps").href = "https://www.google.com/maps/dir/?api=1&destination=" + point.lat + "," + point.lng;
+      document.getElementById("point-waze").href = "https://waze.com/ul?ll=" + point.lat + "," + point.lng + "&navigate=yes";
+    
+    } catch (error) {
+      pointName.textContent = "We could not reach the server.";
+    }
+  }
+
+  navigator.geolocation.getCurrentPosition(showNearestPoint, function () {
+    pointName.textContent = "Turn on your location to see the closest point.";
+  
+  });
 })();

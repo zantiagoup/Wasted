@@ -31,7 +31,7 @@
             <div class="w-tile__foot">
               <div class="w-streak">
                 <svg class="w-i w-i--lg" aria-hidden="true" focusable="false"><use href="#i-flame"/></svg>
-                <span class="w-streak__count">4</span>
+                <span class="w-streak__count" id="streak">0</span>
                 <span class="w-streak__unit">days in a row</span>
               </div>
             </div>
@@ -42,14 +42,11 @@
           <div class="w-tile">
             <div class="w-tile__head"><svg class="w-i w-i--lg" aria-hidden="true" focusable="false"><use href="#i-chart"/></svg><h2>What you throw away</h2></div>
             <p>A chart shows up here once you have scanned a few more things.</p>
-            <div class="w-tile__foot">
-              <div class="w-note"><svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><p>Example only. Nothing saved yet.</p></div>
-            </div>
           </div>
         </div>
       </div>
 
-      <ul class="row g-3 g-lg-4 align-items-stretch w-history-list">
+      <ul class="row g-3 g-lg-4 align-items-stretch w-history-list" id="history-list">
         <li class="col-12 col-md-6 col-xl-4">
           <div class="w-item">
             <a class="w-item__link" href="result.html">
@@ -210,6 +207,8 @@
       <svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-camera"/></svg>
     </a>
   </nav>
+
+  <script src="js/history.js"></script>
 
 </body>
 

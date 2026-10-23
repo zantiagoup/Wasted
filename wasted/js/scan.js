@@ -1,7 +1,7 @@
 /*
 
   Scan screen, users can input from camera, gallery or text. All three sent to server by API, and get back Geminis response.
-   Response is stored in sessionStorage and user is redirected to result screen. The picture itself is never stored.
+   Response is saved in the localStorage history and user is redirected to result screen. The picture itself is never stored.
 
   got help from AI here to parse through how to use the camera and gallery, and to make sure the picture is not too big. It requires HTTPS or
   localhost, wont work on GH pages since that only works for static.
@@ -62,8 +62,12 @@
       var data = await response.json();
 
       if (response.ok) {
-        sessionStorage.setItem("wasted-result", JSON.stringify(data));
-        window.location.href = "result.html";
+        // The history is a plain list of results saved in the browser, newest at the end.
+        var history = JSON.parse(localStorage.getItem("wasted-history")) || [];
+        data.date = new Date().toDateString();
+        history.push(data);
+        localStorage.setItem("wasted-history", JSON.stringify(history));
+        window.location.href = "result.html?item=" + (history.length - 1);
         return;
       }
       message.textContent = data.error;

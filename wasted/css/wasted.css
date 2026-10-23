@@ -600,13 +600,6 @@ textarea:focus-visible {
   font-weight: 500;
 }
 
-.w-map {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: var(--radius-sm);
-}
-
 .w-point {
   display: flex;
   align-items: center;
@@ -627,6 +620,12 @@ textarea:focus-visible {
   margin: 0;
   font-weight: 500;
   line-height: 1.25;
+}
+
+.w-point__address {
+  margin: 4px 0 0;
+  font-size: 14px;
+  line-height: 1.35;
 }
 
 /* 12. History ----------------------------------------------------------- */

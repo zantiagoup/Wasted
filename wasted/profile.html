@@ -29,7 +29,7 @@
           <div class="w-tile w-tile--dark">
             <h1>Profile</h1>
             <div class="w-tile__foot">
-              <span class="w-streak__count">8</span>
+              <span class="w-streak__count" id="scan-count">0</span>
               <p class="w-profile__caption">things you have scanned</p>
             </div>
           </div>
@@ -65,7 +65,7 @@
             <div class="w-tile__head"><svg class="w-i w-i--lg" aria-hidden="true" focusable="false"><use href="#i-trash"/></svg><h2>Start over</h2></div>
             <p>Wipes your list and your streak. This cannot be undone.</p>
             <div class="w-tile__foot">
-              <button class="w-btn w-btn--soft w-btn--small" type="button"><svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-trash"/></svg>Delete my history</button>
+              <button class="w-btn w-btn--soft w-btn--small" type="button" id="delete-history"><svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-trash"/></svg>Delete my history</button>
             </div>
           </div>
         </div>
@@ -140,6 +140,8 @@
       <svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-camera"/></svg>
     </a>
   </nav>
+
+  <script src="js/profile.js"></script>
 
 </body>
 

@@ -1,5 +1,6 @@
 import express from 'express';
 import scanRoutes from './routes/scanRoutes.js';
+import pointsRoutes from './routes/pointsRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,6 +13,7 @@ app.use('/wasted', express.static('wasted'));
 app.use('/design-system', express.static('design-system'));
 
 app.use('/api', scanRoutes);
+app.use('/api', pointsRoutes);
 
 app.get('/', function (req, res) {
   res.redirect('/wasted/');
