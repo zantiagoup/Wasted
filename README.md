@@ -38,7 +38,9 @@ match against.
 
 ### How it is built
 
-- Static HTML5. No build step, no framework, no `package.json`.
+- Static HTML5 pages, no build step, no frontend framework.
+- A small **Express** server (`server.js`) serves the pages and the API. `routes/scanRoutes.js`
+  holds `POST /api/scan`, and `services/gemini-service.js` talks to Gemini.
 - **Bootstrap 5.3.8 grid only** (`bootstrap-grid.min.css` from jsDelivr, with subresource
   integrity). Every Bootstrap component is deliberately unused: the look comes from our own
   design system.
@@ -83,7 +85,7 @@ the width the scale eats out of the gap next to the pill.
 
 Set up shows a dialog when it is opened on a computer, explaining how to switch the browser into
 device emulation so the reviewer sees the phone layout the app ships with. It is informational
-only: `wasted/js/viewport-tip.js` is the only script in the project and it touches nothing else.
+only: `wasted/js/viewport-tip.js` touches nothing else.
 
 It uses a native `<dialog>`, so the focus trap, the Esc key and the inert background come from
 the browser. The trigger is `(hover: hover) and (pointer: fine)`, which asks whether the machine
@@ -91,20 +93,45 @@ has a mouse rather than how wide the window is: a laptop with the window at 900p
 computer. Device emulation reports a coarse pointer and no hover, so entering it closes the
 dialog on its own, which doubles as confirmation that it worked.
 
+### Scanning with Gemini
+
+Scan has three ways in, and all three end in `POST /api/scan`:
+
+- **Camera.** `wasted/js/scan.js` opens the back camera with `getUserMedia` and shows it in the
+  viewfinder. The round button copies the current frame to a canvas, shrinks it to 1024px and
+  sends it as a JPEG. Browsers only allow the camera on `https` or `localhost`; anywhere else the
+  viewfinder says so and the round button opens the gallery picker instead.
+- **Gallery.** A file input; on a phone it also offers to take a photo.
+- **Type it.** The text in the dialog.
+
+The server asks Gemini for a fixed JSON shape (name, category, confidence, description, steps),
+and `wasted/js/result.js` fills the Result screen with it. The answer travels between the two
+screens in `sessionStorage`; the photo is never stored.
+
+The free models are tried in order: `gemini-3.8-flash`, `gemini-3.6-flash`,
+`gemini-3.5-flash-lite`, `gemini-3.1-flash-lite`. If one is busy, out of quota, or takes more than
+15 seconds, the next one answers. A wrong key or a bad request stops right away.
+
 ### What is not wired up yet
 
-Screens showing invented data say so on the screen. The vision model, the SEMADET matching and
+Screens showing invented data say so on the screen. The SEMADET matching, the map, History and
 the streak counter are the next delivery; the category illustrations are flat placeholders that
 will be replaced by 3D renders exported as static images.
 
 ### Running it locally
 
-Any static server works, because the pages reference files one directory up:
+Requires Node.js 20 or later and a free Gemini key from
+[Google AI Studio](https://aistudio.google.com/apikey).
 
 ```bash
-python3 -m http.server 8000
-# then open http://localhost:8000/wasted/
+npm install
+cp .env.example .env   # then paste the key after GEMINI_API_KEY=
+npm start
+# then open http://localhost:3000/wasted/
 ```
+
+GitHub Pages only serves static files, so the published site shows the screens but cannot scan:
+scanning needs this server running.
 
 ### AI usage
 

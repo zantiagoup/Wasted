@@ -29,11 +29,11 @@
           <div class="w-stack">
 
             <div class="w-tile w-tile--dark">
-              <span class="w-chip">PET</span>
-              <h1 class="w-result__title">Water bottle</h1>
+              <span class="w-chip" id="result-category">PET</span>
+              <h1 class="w-result__title" id="result-name">Water bottle</h1>
               <p class="w-meter__label" id="confidence">We are 92% sure</p>
               <div class="w-meter" role="img" aria-labelledby="confidence">
-                <div class="w-meter__fill" style="width:92%"></div>
+                <div class="w-meter__fill" id="result-meter" style="width:92%"></div>
               </div>
             </div>
 
@@ -75,12 +75,12 @@
 
             <div class="w-tile">
               <div class="w-tile__head"><svg class="w-i w-i--lg" aria-hidden="true" focusable="false"><use href="#i-cube"/></svg><h2>What it is</h2></div>
-              <p class="w-result__description">Clear plastic, the kind drink bottles are made of.</p>
+              <p class="w-result__description" id="result-description">Clear plastic, the kind drink bottles are made of.</p>
             </div>
 
             <div class="w-tile w-grow">
               <div class="w-tile__head"><svg class="w-i w-i--lg" aria-hidden="true" focusable="false"><use href="#i-droplet"/></svg><h2>Get it ready</h2></div>
-              <ul class="w-prep">
+              <ul class="w-prep" id="result-steps">
                 <li><svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-droplet"/></svg>Rinse it</li>
                 <li><svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-cap"/></svg>Cap off</li>
                 <li><svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-crush"/></svg>Crush it</li>
@@ -136,6 +136,8 @@
     <symbol id="i-smartphone" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></symbol>
     <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></symbol>
   </svg>
+
+  <script src="js/result.js"></script>
 
   <!-- Reusable component: bottom navigation. Two secondary modules in the
        pill, the only real action as the sphere on the right. Identical block on

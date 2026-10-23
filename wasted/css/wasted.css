@@ -467,9 +467,28 @@ textarea:focus-visible {
 }
 
 .w-viewfinder p {
+  position: relative;
   margin: 0;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--forest);
   font-size: 18px;
   font-weight: 500;
+}
+
+/* Empty while the live camera is showing, so no pill covers the picture. */
+.w-viewfinder p:empty {
+  display: none;
+}
+
+/* The live camera fills the viewfinder; the brackets and the text sit on top. */
+.w-viewfinder video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
 }
 
 .w-bracket {

@@ -1,0 +1,12 @@
+{
+  "name": "wasted",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env server.js"
+  },
+  "dependencies": {
+    "@google/genai": "^2.31.0",
+    "express": "^5.3.0"
+  }
+}

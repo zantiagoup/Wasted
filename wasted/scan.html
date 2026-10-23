@@ -27,18 +27,20 @@
 
         <div class="col-12 col-lg-6">
           <div class="w-viewfinder">
+            <video id="camera" autoplay playsinline muted hidden></video>
             <span class="w-bracket w-bracket--tl"></span>
             <span class="w-bracket w-bracket--tr"></span>
             <span class="w-bracket w-bracket--bl"></span>
             <span class="w-bracket w-bracket--br"></span>
-            <p>Point at the item</p>
+            <p id="viewfinder-text" aria-live="polite">Point at the item</p>
           </div>
         </div>
 
         <div class="col-12 col-lg-6">
           <div class="w-stack w-stack--auto">
             <div class="w-btn-row">
-              <a class="w-btn w-btn--small" href="result.html"><svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-image"/></svg>Gallery</a>
+              <label class="w-btn w-btn--small" for="gallery-input"><svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-image"/></svg>Gallery</label>
+              <input type="file" id="gallery-input" accept="image/*" hidden>
               <a class="w-btn w-btn--small" href="result.html" data-open-type><svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-type"/></svg>Type it</a>
             </div>
             <h1>Steps</h1>
@@ -168,6 +170,8 @@
       <svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-camera"/></svg>
     </a>
   </nav>
+
+  <script src="js/scan.js"></script>
 
 </body>
 
