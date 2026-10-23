@@ -10,6 +10,7 @@
   "use strict";
 
   var video = document.getElementById("camera");
+  var viewfinder = document.querySelector(".w-viewfinder");
   var message = document.getElementById("viewfinder-text");
   var shutter = document.querySelector(".w-nav__fab");
   var galleryInput = document.getElementById("gallery-input");
@@ -51,6 +52,8 @@
 
   async function sendToServer(body) {
     message.textContent = "Looking at it…";
+    // Flash, then the corners close in and breathe until there is an answer.
+    viewfinder.classList.add("is-looking");
     shutter.setAttribute("aria-disabled", "true");
 
     try {
@@ -75,6 +78,7 @@
       message.textContent = "We could not reach the server.";
     }
 
+    viewfinder.classList.remove("is-looking");
     shutter.removeAttribute("aria-disabled");
     if (cameraIsOn) video.play();
   }
@@ -82,6 +86,13 @@
   shutter.addEventListener("click", function (event) {
     event.preventDefault();
     if (shutter.getAttribute("aria-disabled")) return;
+
+    // Play the whole press, sink and spring back, even on a quick tap, and a
+    // short buzz where the phone supports it (Android; iPhone ignores it).
+    shutter.classList.remove("is-pressed");
+    void shutter.offsetWidth;
+    shutter.classList.add("is-pressed");
+    if (navigator.vibrate) navigator.vibrate(12);
 
     if (cameraIsOn) {
       video.pause();
@@ -107,6 +118,10 @@
     event.preventDefault();
     typeDialog.close();
     sendToServer({ text: typeText.value });
+  });
+
+  shutter.addEventListener("animationend", function () {
+    shutter.classList.remove("is-pressed");
   });
 
   startCamera();

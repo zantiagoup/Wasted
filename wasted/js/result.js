@@ -21,6 +21,10 @@
   document.getElementById("result-meter").style.width = result.confidence + "%";
   document.getElementById("result-description").textContent = result.description;
 
+  if (result.demo) {
+    document.getElementById("demo-note").style.display = "";
+  }
+
   // Below 70% we still say what we think it is, but warn the user.
   if (result.confidence < 70 && !result.corrected) {
     document.getElementById("low-confidence").style.display = "";

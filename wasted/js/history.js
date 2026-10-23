@@ -17,6 +17,8 @@
     var link = "result.html?item=" + i;
     var item = document.createElement("li");
     item.className = "col-12 col-md-6 col-xl-4";
+    // Its place in the list, so the cards settle in one after another.
+    item.style.setProperty("--i", history.length - 1 - i);
     item.innerHTML =
       '<div class="w-item">' +
         '<a class="w-item__link" href="' + link + '">' +

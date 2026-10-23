@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { classifyWaste } from '../services/gemini-service.js';
+import { demoClassify } from '../services/demo-service.js';
 
 const router = Router();
 
@@ -13,7 +14,10 @@ router.post('/scan', async function (req, res) {
   }
 
   try {
-    const result = await classifyWaste(image, text);
+    // Without a Gemini key the server answers with demo samples instead.
+    const result = process.env.GEMINI_API_KEY
+      ? await classifyWaste(image, text)
+      : await demoClassify(text);
     res.json(result);
   } catch (error) {
     console.log('Scan failed: ' + error.message);

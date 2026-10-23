@@ -12,7 +12,7 @@ Dos piezas, dos usos. No hay más versiones.
 |---|---|---|
 | `Wasted_Logo.svg` | Lockup completo: isótipo + "asted" | Portadas, encabezados, cualquier lugar donde se lea el nombre por primera vez |
 | `Wasted_Icon.svg` | Isótipo solo (el bote-W) | Favicon, app icon, avatar, marcas de página, espacios cuadrados o menores a 120 px |
-| `Wasted_Logo_Inverse.svg` | Lockup para fondo oscuro: isótipo `#ECF39E`, palabra `#90A955` | Cualquier cosa sobre `#132A13` |
+| `Wasted_Logo_Inverse.svg` | Lockup para fondo oscuro: bote `#7FB84F`, palabra `#ECF39E` | Cualquier cosa sobre `#132A13` |
 
 **El concepto:** la W es el bote. El cuerpo del bote se angosta hacia abajo igual que las diagonales de la W, así que la letra y el objeto son el mismo trazo. Arriba lleva tapa y agarradera.
 
@@ -20,33 +20,35 @@ Dos piezas, dos usos. No hay más versiones.
 
 - `Wasted_Logo.svg` — viewBox `0 0 339 116`, relación 2.92:1
 - `Wasted_Icon.svg` — viewBox `0 0 72 78`, relación 0.92:1
-- Colores dentro del SVG: isótipo `#132A13`, palabra "asted" `#90A955`
+- **Sobre claro** el logo va todo en `#132A13`.
+- **Sobre `#132A13`** la palabra va en `--lime` y el bote en `--sprout` (`#7FB84F`, 6.48 de contraste). Sprout es `--moss` aclarado con el mismo tono (OKLCH 0.68 · 0.14 · 133), así que es de la misma familia que los avisos pero resalta sobre forest. Solo vive en el bote.
 
 ### Reglas de uso
 
 - **Aire mínimo:** el ancho de la tapa del bote por los cuatro lados.
 - **Tamaño mínimo:** lockup 120 px de ancho; isótipo 24 px de ancho.
-- **Fondo:** blanco o `#ECF39E`. Sobre fondo oscuro (`#132A13`) se invierte: isótipo en `#ECF39E`, palabra en `#90A955`.
-- **Nunca:** estirarlo, rotarlo, ponerle sombra o degradado, cambiar los colores entre sus dos partes, meterlo en una caja de color que no sea de la paleta, ni redibujar la W con otra tipografía.
+- **Fondo:** blanco o `--mist` con el logo normal; `--forest` con el invertido.
+- **Nunca:** estirarlo, rotarlo, ponerle sombra o degradado, usar sprout fuera del bote o poner el bote en otro color, meterlo en una caja de color que no sea de la paleta, ni redibujar la W con otra tipografía.
 
 ### Nota de accesibilidad
 
-La palabra "asted" en `#90A955` sobre blanco da 2.63:1, por debajo de WCAG AA. Los logotipos están exentos de esa regla, pero por eso **el logo siempre necesita texto alternativo** (`alt="Wasted"`) y nunca se usa como si fuera un párrafo. El isótipo, cuando acompaña a un título que ya dice el nombre, va como decorativo (`alt=""`).
+**El logo siempre necesita texto alternativo** (`alt="Wasted"`) y nunca se usa como si fuera un párrafo. El isótipo, cuando acompaña a un título que ya dice el nombre, va como decorativo (`alt=""`).
 
 ---
 
 ## 2. Paleta
 
-Cinco tonos. Un solo eje: verde. Sin color de apoyo, sin gris neutro que no sea el papel.
+Seis tonos para la interfaz, un solo eje: verde, más `--sprout` reservado para el logo. Cada superficie tiene **un solo juego de colores de texto**, siempre el mismo en toda la app.
 
-| Token | Hex | Nombre | Rol |
-|---|---|---|---|
-| `--forest` | `#132A13` | Forest | Texto principal, isótipo, fondos oscuros |
-| `--pine` | `#31572C` | Pine | Texto secundario, ligas, citas |
-| `--moss` | `#4F772D` | Moss | Acentos, marcadores de nota, filetes |
-| `--sage` | `#90A955` | Sage | Solo decorativo: reglas, bordes, la palabra del logo |
-| `--lime` | `#ECF39E` | Lime | Fondos de resalte, chips, bloques de cita |
-| `--paper` | `#FFFFFF` | Paper | Fondo base |
+| Token | Hex | Rol |
+|---|---|---|
+| `--forest` | `#132A13` | Texto principal y superficie oscura |
+| `--pine` | `#31572C` | Texto secundario sobre claro, hover de botones oscuros |
+| `--moss` | `#4F772D` | Solo fondo de avisos |
+| `--mist` | `#EEF2E4` | Superficie clara: tiles, campos, listas, pasos |
+| `--lime` | `#ECF39E` | Texto e íconos sobre forest; acentos chicos (chips, nav activa, barra de confianza) |
+| `--paper` | `#FFFFFF` | Fondo de página, diálogos, botones blancos |
+| `--sprout` | `#7FB84F` | Solo el bote del logo invertido. Nunca en la interfaz |
 
 ### CSS listo para copiar
 
@@ -55,28 +57,30 @@ Cinco tonos. Un solo eje: verde. Sin color de apoyo, sin gris neutro que no sea 
   --forest: #132a13;
   --pine:   #31572c;
   --moss:   #4f772d;
-  --sage:   #90a955;
+  --mist:   #eef2e4;
   --lime:   #ecf39e;
   --paper:  #ffffff;
+  --sprout: #7fb84f; /* solo logo */
 }
 ```
 
-### Contraste (WCAG 2.1, medido)
+### Combinaciones (las únicas permitidas)
 
-| Color | Sobre blanco | Sobre `--lime` | Sobre `--forest` |
+| Superficie | Texto e íconos | Contraste | Dónde |
 |---|---|---|---|
-| `--forest` `#132A13` | **15.35** AAA | **13.07** AAA | — |
-| `--pine` `#31572C` | **8.30** AAA | **7.07** AAA | 1.85 ✗ |
-| `--moss` `#4F772D` | **5.24** AA | 4.46 ✗ | 2.93 ✗ |
-| `--sage` `#90A955` | 2.63 ✗ | 2.24 ✗ | **5.84** AA |
-| `--lime` `#ECF39E` | 1.17 ✗ | — | **13.07** AAA |
+| `--paper` | `--forest`, secundario `--pine` | 15.35 / 8.30 | Página, diálogos, botones blancos, barra de navegación |
+| `--mist` | `--forest`, secundario `--pine` | 13.49 / 7.29 | Tiles, campos, elementos de lista, pasos |
+| `--forest` | `--lime`, sin excepción | 13.07 | Hero, tile oscuro, visor de cámara, botón principal |
+| `--lime` | `--forest` | 13.07 | Chips, ítem activo de la navegación, relleno de la barra |
+| `--moss` | `--paper` | 5.24 | Avisos |
 
-### Combinaciones permitidas
+Reglas:
 
-- Texto normal sobre blanco: `--forest`, `--pine`, `--moss`.
-- Texto sobre `--lime`: `--forest` o `--pine`. **Moss no**, se queda en 4.46.
-- Texto sobre `--forest`: `--lime` o `--sage`.
-- `--sage` sobre claro: **nunca para texto**. Filetes, bordes e ilustración únicamente.
+- **Sobre forest todo es lime.** Títulos, texto secundario, íconos, bordes del visor. La jerarquía sale del tamaño y el peso, no de otro verde.
+- **Lime nunca es fondo grande.** Cansa la vista; solo piezas chicas.
+- **Hover:** los botones claros (blanco o mist) pasan a forest + lime; el botón forest pasa a pine + lime (7.07).
+- **Foco:** anillo `--forest` de 3 px con separación de 3 px.
+- Las sombras usan forest con transparencia; no cuentan como color.
 
 ---
 
@@ -102,4 +106,4 @@ Interlineado de cuerpo: 1.7 en pantalla, 1.62 impreso.
 
 **Card de cierre:** bloque `--forest` con esquinas de 28 px, sombra suave y todo centrado, del ancho completo de la columna de contenido (las dos columnas de la retícula, `grid-column: 1 / -1`). Dentro va el lockup invertido y el eslogan. En impresión pierde la sombra y baja a 7 mm de radio.
 
-`../entregables/html design/wasted_FixedProposal.html` es la implementación viva del sistema: portada con el lockup, isótipo como marca en cada sección, entradas con filete `--sage`, citas sobre `--lime` y ligas en `--pine`. Cualquier pieza nueva copia esos patrones antes de inventar otros.
+`../entregables/html design/wasted_FixedProposal.html` es la implementación viva del sistema: portada con el lockup, isótipo como marca en cada sección, entradas con filete `--pine`, citas sobre `--mist` y ligas en `--pine`. Cualquier pieza nueva copia esos patrones antes de inventar otros.

@@ -2,12 +2,17 @@
    Wasted — application stylesheet
    Every colour, font and radius here comes from design-system/DESIGN_SYSTEM.md.
    Nothing in this file uses a border stroke: grouping is done with contrasting
-   surfaces, and every surface pairs with a text colour that passes WCAG AA.
+   surfaces, and every surface has exactly one set of text colours. Never mix:
+   on forest everything is lime, on lime everything is forest.
 
-     paper  + forest   15.35  AAA
-     lime   + forest   13.07  AAA
-     forest + lime     13.07  AAA
-     moss   + paper     5.24  AA     <- notices only
+     surface   text                  where
+     paper     forest, pine (15.35 / 8.30)   page, dialogs, white buttons, nav pill
+     mist      forest, pine (13.49 / 7.29)   tiles, fields, list items, steps
+     forest    lime         (13.07)          hero, dark tile, viewfinder, primary button
+     lime      forest       (13.07)          chips, active nav item, meter fill
+     moss      paper        (5.24)           notices only
+
+   pine is secondary text on light surfaces and the hover of forest buttons.
    ========================================================================== */
 
 /* 1. Tokens ------------------------------------------------------------- */
@@ -18,7 +23,7 @@
   --forest: #132a13;
   --pine: #31572c;
   --moss: #4f772d;
-  --sage: #90a955;
+  --mist: #eef2e4;
   --lime: #ecf39e;
   --paper: #ffffff;
 
@@ -30,6 +35,18 @@
 
   --lift: 0 16px 34px -20px rgba(19, 42, 19, 0.4);
   --lift-strong: 0 22px 48px -18px rgba(19, 42, 19, 0.5);
+
+  /* Motion, after Apple's springs (WWDC23 "Animate with springs"): each curve
+     is a real spring sampled into linear(), duration 0.5 s.
+     smooth  bounce 0     no overshoot: entrances, fills, page changes
+     snappy  bounce 0.15  a hint of life: presses and toggles
+     bouncy  bounce 0.35  only for rewards, like a badge appearing */
+  --spring-smooth: linear(0, 0.058, 0.182, 0.323, 0.458, 0.576, 0.674, 0.753, 0.814, 0.862, 0.898, 0.925, 0.946, 0.96, 0.971, 0.979, 0.985, 0.989, 0.992, 0.995, 0.996, 0.997, 0.998, 0.999, 1);
+  --spring-snappy: linear(0, 0.06, 0.193, 0.349, 0.5, 0.633, 0.741, 0.826, 0.888, 0.933, 0.963, 0.983, 0.995, 1.002, 1.005, 1.006, 1.006, 1.005, 1.004, 1.002, 1.001, 1);
+  --spring-bouncy: linear(0, 0.048, 0.165, 0.316, 0.476, 0.626, 0.757, 0.864, 0.945, 1.003, 1.039, 1.06, 1.068, 1.067, 1.06, 1.05, 1.039, 1.029, 1.019, 1.012, 1.005, 1.001, 0.998, 0.996, 0.996, 0.998, 1);
+  --dur-press: 160ms;
+  --dur-move: 450ms;
+  --dur-settle: 800ms;
 }
 
 /* 2. Base --------------------------------------------------------------- */
@@ -53,6 +70,11 @@ body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* Set up has no bottom navigation: you are not inside the app yet. */
+.w-bare {
+  padding-bottom: 0;
 }
 
 h1,
@@ -97,10 +119,11 @@ ol {
 
 a:focus-visible,
 button:focus-visible,
+summary:focus-visible,
 select:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 3px solid var(--moss);
+  outline: 3px solid var(--forest);
   outline-offset: 3px;
   border-radius: 6px;
 }
@@ -187,14 +210,14 @@ textarea:focus-visible {
 
 /* 4. Bento tiles -------------------------------------------------------- */
 
-/* The default surface: a lime block that groups controls of one kind. */
+/* The default surface: a mist block that groups controls of one kind. */
 .w-tile {
   display: flex;
   flex-direction: column;
   height: 100%;
   padding: 22px;
   border-radius: var(--radius-md);
-  background: var(--lime);
+  background: var(--mist);
   color: var(--forest);
 }
 
@@ -307,6 +330,14 @@ textarea:focus-visible {
   font-weight: 500;
   text-decoration: none;
   cursor: pointer;
+  transition: background-color var(--dur-press) ease-out, color var(--dur-press) ease-out,
+    transform var(--dur-move) var(--spring-snappy);
+}
+
+/* Press: the button gives under the finger, then springs back on release. */
+.w-btn:active {
+  transform: scale(0.96);
+  transition-duration: var(--dur-press), var(--dur-press), 90ms;
 }
 
 .w-btn:hover {
@@ -314,7 +345,7 @@ textarea:focus-visible {
   color: var(--lime);
 }
 
-/* On a lime tile the filled button would vanish, so it inverts. */
+/* On a mist tile the filled button would vanish, so it inverts. */
 .w-btn--soft {
   background: var(--paper);
   color: var(--forest);
@@ -326,15 +357,15 @@ textarea:focus-visible {
 }
 
 /* The way out of a dialog. --soft would be white on the white dialog, so the
-   secondary action takes the grouping surface instead. lime + forest is 13.07. */
+   secondary action takes the grouping surface instead. mist + forest is 13.49. */
 .w-btn--quiet {
-  background: var(--lime);
+  background: var(--mist);
   color: var(--forest);
 }
 
 .w-btn--quiet:hover {
-  background: var(--sage);
-  color: var(--forest);
+  background: var(--forest);
+  color: var(--lime);
 }
 
 .w-btn--block {
@@ -387,7 +418,7 @@ textarea:focus-visible {
   padding: 14px 16px;
   border: 0;
   border-radius: var(--radius-sm);
-  background: var(--lime);
+  background: var(--mist);
   color: var(--forest);
   font-family: inherit;
   font-size: 16px;
@@ -395,7 +426,7 @@ textarea:focus-visible {
   resize: vertical;
 }
 
-/* pine on lime is 6.58, so the hint still passes AA. */
+/* pine on mist is 7.29, so the hint still passes AA. */
 .w-textarea::placeholder {
   color: var(--pine);
   opacity: 1;
@@ -438,8 +469,8 @@ textarea:focus-visible {
   height: 22px;
   margin: 4px;
   border-radius: 50%;
-  background: var(--sage);
-  transition: transform 0.15s ease, background-color 0.15s ease;
+  background: var(--pine);
+  transition: transform var(--dur-move) var(--spring-snappy), background-color var(--dur-press) ease-out;
 }
 
 .w-switch__input:checked {
@@ -495,7 +526,7 @@ textarea:focus-visible {
   position: absolute;
   width: 36px;
   height: 36px;
-  border: 3px solid var(--sage);
+  border: 3px solid var(--lime);
 }
 
 .w-bracket--tl {
@@ -530,32 +561,30 @@ textarea:focus-visible {
   border-bottom-right-radius: 12px;
 }
 
-/* 10. Step tile --------------------------------------------------------- */
+/* 10. Steps ------------------------------------------------------------- */
 
-/* One step of the flow: an icon, a number and two or three words. */
-.w-step {
+/* How Scan works, in one strip: three icons with two or three words each. */
+.w-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 16px 12px;
+  border-radius: var(--radius-md);
+  background: var(--mist);
+  color: var(--forest);
+  list-style: none;
+}
+
+.w-steps li {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  gap: 10px;
-  height: 100%;
-  min-height: 112px;
-  padding: 16px;
-  border-radius: var(--radius-sm);
-  background: var(--lime);
-  color: var(--forest);
-}
-
-.w-step__n {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--moss);
-}
-
-.w-step b {
-  font-size: 16px;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 1.25;
+  text-align: center;
 }
 
 /* 11. Result ------------------------------------------------------------ */
@@ -584,7 +613,7 @@ textarea:focus-visible {
 }
 
 .w-meter__label {
-  color: var(--sage);
+  color: var(--lime);
   font-size: 15px;
 }
 
@@ -635,7 +664,7 @@ textarea:focus-visible {
 }
 
 .w-profile__caption {
-  color: var(--sage);
+  color: var(--lime);
   margin-top: 6px;
 }
 
@@ -657,6 +686,165 @@ textarea:focus-visible {
   line-height: 1;
 }
 
+/* 12b. Impact and badges ------------------------------------------------ */
+
+.w-impact {
+  margin: 0;
+  font-size: 17px;
+}
+
+.w-impact b {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+/* The meter on a light tile: white track, forest fill (mist + forest rule). */
+.w-meter--light {
+  background: var(--paper);
+}
+
+.w-meter--light .w-meter__fill {
+  background: var(--forest);
+}
+
+.w-impact__next {
+  margin: 0 0 18px;
+  color: var(--pine);
+  font-size: 15px;
+}
+
+.w-badges {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.w-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--pine);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.w-badge__disc {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--pine);
+}
+
+/* Unlocked: the forest surface, so everything on it is lime. */
+.w-badge--on {
+  color: var(--forest);
+  cursor: pointer;
+}
+
+.w-badge--on .w-badge__disc {
+  background: var(--forest);
+  color: var(--lime);
+  transition: transform var(--dur-move) var(--spring-snappy);
+}
+
+.w-badge--on:hover .w-badge__disc {
+  transform: translateY(-2px);
+}
+
+.w-badge[aria-pressed="true"] .w-badge__disc {
+  box-shadow: 0 0 0 3px var(--mist), 0 0 0 5px var(--forest);
+}
+
+/* The fact a badge unlocks, pointing down at its badge. */
+.w-badge-tip {
+  position: relative;
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--forest);
+  color: var(--lime);
+  font-size: 14px;
+  line-height: 1.45;
+  animation: w-tip-in 0.25s ease-out;
+}
+
+.w-badge-tip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: var(--arrow-x, 10%);
+  border: 8px solid transparent;
+  border-top-color: var(--forest);
+  transform: translateX(-50%);
+}
+
+@keyframes w-tip-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+.w-badges__source {
+  margin: 16px 0 0;
+  color: var(--pine);
+  font-size: 12px;
+}
+
+/* 12c. Folding tiles ---------------------------------------------------- */
+
+/* Settings stay shut until you need them: the head is the toggle. */
+.w-fold > summary {
+  margin-bottom: 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.w-fold > summary::-webkit-details-marker {
+  display: none;
+}
+
+.w-fold[open] > summary {
+  margin-bottom: 18px;
+}
+
+.w-fold__chevron {
+  margin-left: auto;
+  transition: transform var(--dur-move) var(--spring-smooth);
+}
+
+.w-fold[open] .w-fold__chevron {
+  transform: rotate(180deg);
+}
+
+/* While fold.js closes a tile it is still [open], so the chevron turns back
+   at the start of the close instead of the end. */
+.w-fold.is-closing .w-fold__chevron {
+  transform: none;
+}
+
+/* Each tile keeps its own height, so opening one does not stretch its
+   neighbour in the same row. */
+.w-fold {
+  height: auto;
+}
+
+.w-fold > :not(summary) + :not(summary) {
+  margin-top: 14px;
+}
+
 .w-item {
   display: flex;
   align-items: center;
@@ -664,7 +852,7 @@ textarea:focus-visible {
   height: 100%;
   padding: 14px;
   border-radius: var(--radius-md);
-  background: var(--lime);
+  background: var(--mist);
   color: var(--forest);
 }
 
@@ -780,6 +968,12 @@ textarea:focus-visible {
   font-size: 16px;
   font-weight: 500;
   text-decoration: none;
+  transition: background-color var(--dur-press) ease-out, transform var(--dur-move) var(--spring-snappy);
+}
+
+.w-nav__item:active {
+  transform: scale(0.94);
+  transition-duration: var(--dur-press), 90ms;
 }
 
 .w-nav__item:hover {
@@ -818,11 +1012,11 @@ textarea:focus-visible {
   height: 68px;
   flex: none;
   border-radius: 50%;
-  background: radial-gradient(circle at 34% 27%, #4f772d 0%, #31572c 45%, #132a13 100%);
+  background: radial-gradient(circle at 34% 27%, var(--moss) 0%, var(--pine) 45%, var(--forest) 100%);
   box-shadow: 0 1.5px 1px rgba(236, 243, 158, 0.35) inset, 0 -12px 20px -10px rgba(0, 0, 0, 0.85) inset,
     0 16px 28px -12px rgba(19, 42, 19, 0.62), 0 4px 8px -3px rgba(19, 42, 19, 0.45);
   color: var(--lime);
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  transition: transform var(--dur-move) var(--spring-snappy), box-shadow var(--dur-press) ease-out;
   --fab-scale: 1;
   transform: scale(var(--fab-scale));
 }
@@ -892,7 +1086,7 @@ textarea:focus-visible {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--moss);
+  color: var(--pine);
 }
 
 .w-modal h2 {
@@ -917,7 +1111,7 @@ textarea:focus-visible {
   margin: 18px 0;
   padding: 18px 20px;
   border-radius: var(--radius-sm);
-  background: var(--lime);
+  background: var(--mist);
   counter-reset: howto;
 }
 
@@ -932,35 +1126,62 @@ textarea:focus-visible {
   content: counter(howto) ".";
   position: absolute;
   left: 0;
-  color: var(--moss);
+  color: var(--pine);
   font-weight: 700;
 }
 
-/* Same surface as the numbered steps, but advice has no order, so the step
-   number becomes an icon that says what the line is about. */
-.w-tips {
-  display: grid;
-  gap: 12px;
-  margin: 18px 0;
-  padding: 18px 20px;
-  border-radius: var(--radius-sm);
-  background: var(--lime);
+/* A sheet: the short form of the dialog. One question as the title, a round
+   close button beside it, one field, one full-width action. */
+.w-sheet {
+  padding: 26px 24px 24px;
 }
 
-/* The text lives in its own <span>: with the icon as a sibling, any inline
-   tag left loose in the <li> would become a flex item of its own and break
-   onto a line by itself. */
-.w-tips li {
+.w-sheet__head {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  line-height: 1.45;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
 }
 
-/* pine on lime is 6.58, well past the 3.0 a graphic needs. */
-.w-tips .w-i {
-  margin-top: 2px;
+.w-sheet h2 {
+  margin: 0;
+  font-size: 26px;
+}
+
+.w-sheet__close {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--mist);
+  color: var(--forest);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.w-sheet__close:hover {
+  background: var(--forest);
+  color: var(--lime);
+}
+
+.w-sheet__close .w-i {
+  width: 18px;
+  height: 18px;
+}
+
+.w-sheet .w-textarea {
+  min-height: 0;
+}
+
+.w-sheet__note {
+  margin: 10px 0 22px;
   color: var(--pine);
+  font-size: 14px;
 }
 
 .w-howto kbd {
@@ -975,7 +1196,7 @@ textarea:focus-visible {
 .w-nav__fab--active {
   --fab-scale: 1.25;
   margin-left: 10px;
-  background: radial-gradient(circle at 34% 27%, #ecf39e 0%, #90a955 55%, #4f772d 100%);
+  background: radial-gradient(circle at 34% 27%, var(--lime) 0%, var(--moss) 100%);
   box-shadow: 0 1.5px 1px rgba(255, 255, 255, 0.7) inset, 0 -12px 20px -10px rgba(19, 42, 19, 0.7) inset,
     0 16px 28px -12px rgba(19, 42, 19, 0.55), 0 4px 8px -3px rgba(19, 42, 19, 0.4);
   color: var(--forest);
@@ -1025,8 +1246,689 @@ textarea:focus-visible {
   }
 }
 
+/* 16. Landing ----------------------------------------------------------- */
+
+/* The page for computers, built like a product page: lots of air, one idea
+   per section, real screenshots of the app instead of drawn phones. Same
+   pairings as the app: paper and mist take forest, forest takes lime. */
+
+.l-page {
+  font-size: 19px;
+}
+
+.l-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--paper) 84%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  backdrop-filter: saturate(180%) blur(18px);
+  box-shadow: 0 1px 0 rgba(19, 42, 19, 0.08);
+}
+
+.l-nav__inner,
+.l-foot__inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.l-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 60px;
+}
+
+.l-nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--forest);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-decoration: none;
+}
+
+.l-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 88px 24px 0;
+  text-align: center;
+}
+
+.l-hero__title {
+  font-size: clamp(52px, 9vw, 112px);
+  letter-spacing: -0.055em;
+  line-height: 0.95;
+  overflow-wrap: anywhere;
+}
+
+.l-lead {
+  max-width: 34ch;
+  margin: 32px auto 0;
+  color: var(--pine);
+  font-size: clamp(19px, 2.2vw, 24px);
+  line-height: 1.4;
+}
+
+.l-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px 28px;
+  margin-top: 36px;
+}
+
+.l-link {
+  color: var(--forest);
+  font-weight: 500;
+  text-decoration: none;
+  text-underline-offset: 4px;
+}
+
+.l-link::after {
+  content: " \203A";
+}
+
+.l-link:hover {
+  text-decoration: underline;
+}
+
+/* A real screenshot of the app inside the outline of a current iPhone:
+   a thin dark bezel, round screen corners and the Dynamic Island. The
+   space under the island stands in for the status bar. */
+.l-shot {
+  margin: 0;
+}
+
+.l-phone {
+  padding: 3.4%;
+  border-radius: 15% / 7%;
+  background: var(--forest);
+  box-shadow: 0 0 0 1.5px var(--pine), var(--lift-strong);
+}
+
+.l-phone__screen {
+  position: relative;
+  padding-top: 13%;
+  overflow: hidden;
+  border-radius: 12% / 5.6%;
+  background: var(--paper);
+}
+
+.l-phone__screen::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 31%;
+  margin-top: 3%;
+  aspect-ratio: 126 / 37;
+  border-radius: 999px;
+  background: var(--forest);
+  transform: translateX(-50%);
+}
+
+.l-phone__screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.l-shot--hero {
+  width: min(340px, 82vw);
+  margin-top: 72px;
+}
+
+/* Two tiles side by side; the screenshot rises from the bottom edge. */
+.l-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  max-width: 1080px;
+  margin: 140px auto 0;
+  padding: 0 24px;
+}
+
+.l-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 56px 40px 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--mist);
+  text-align: center;
+}
+
+.l-tile h2,
+.l-statement h2 {
+  font-size: clamp(32px, 4vw, 48px);
+  letter-spacing: -0.045em;
+}
+
+.l-tile p {
+  max-width: 28ch;
+  margin-top: 16px;
+  color: var(--pine);
+}
+
+.l-shot--tile {
+  width: min(280px, 70%);
+  height: 340px;
+  margin-top: 40px;
+  overflow: hidden;
+}
+
+.l-shot--tile .l-phone {
+  box-shadow: 0 0 0 1.5px var(--pine);
+}
+
+/* One statement on the forest surface, so everything on it is lime. */
+.l-statement {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  max-width: 1032px;
+  margin: 24px auto 0;
+  padding: 64px 72px;
+  border-radius: var(--radius-lg);
+  background: var(--forest);
+  color: var(--lime);
+}
+
+.l-statement__icon {
+  width: 72px;
+  height: 72px;
+  stroke-width: 1.5;
+}
+
+.l-statement p {
+  max-width: 40ch;
+  margin-top: 14px;
+  font-size: clamp(19px, 2vw, 22px);
+}
+
+/* How we do it: Apple's statement cards. A left-aligned title, then one
+   card per step with a loose icon on top and one sentence whose key words
+   are forest and the rest pine. */
+.l-steps {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 140px 24px 0;
+}
+
+.l-steps h2 {
+  font-size: clamp(36px, 5vw, 64px);
+  letter-spacing: -0.05em;
+}
+
+.l-steps ol {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 48px;
+}
+
+.l-step {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  min-height: 260px;
+  padding: 32px 28px;
+  border-radius: var(--radius-lg);
+  background: var(--mist);
+}
+
+.l-step__icon {
+  width: 40px;
+  height: 40px;
+  stroke-width: 1.5;
+  color: var(--forest);
+}
+
+.l-step p {
+  margin: 0;
+  color: var(--pine);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.l-step b {
+  color: var(--forest);
+  font-weight: 700;
+}
+
+@media (max-width: 991px) {
+  .l-steps ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.l-get {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 140px 24px 160px;
+  text-align: center;
+}
+
+.l-get__title {
+  font-size: clamp(48px, 7vw, 88px);
+  letter-spacing: -0.055em;
+}
+
+.l-get .w-btn {
+  margin-top: 36px;
+}
+
+.l-get__hint {
+  margin-top: 18px;
+  color: var(--pine);
+  font-size: 15px;
+}
+
+.l-foot {
+  padding: 48px 0 40px;
+  background: var(--mist);
+  color: var(--pine);
+  font-size: 14px;
+}
+
+.l-foot__cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.l-foot h2 {
+  margin-bottom: 10px;
+  color: var(--forest);
+  font-size: 14px;
+  letter-spacing: 0;
+}
+
+.l-foot li + li {
+  margin-top: 6px;
+}
+
+.l-foot a {
+  color: var(--pine);
+  text-decoration: none;
+}
+
+.l-foot a:hover {
+  color: var(--forest);
+  text-decoration: underline;
+}
+
+.l-foot__fine {
+  margin-top: 36px;
+  padding-top: 20px;
+  box-shadow: 0 -1px 0 rgba(19, 42, 19, 0.12);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* Sections rise in once. Only hidden when the script is there to show them. */
+.js .l-reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.js .l-reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 767px) {
+  .l-pair {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 96px;
+    padding: 0 16px;
+  }
+
+  .l-tile {
+    padding: 44px 24px 0;
+  }
+
+  .l-statement {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    margin: 16px 16px 0;
+    padding: 40px 28px;
+  }
+
+  .l-steps {
+    padding: 96px 16px 0;
+  }
+
+  .l-steps ol {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .l-step {
+    gap: 28px;
+    min-height: 0;
+  }
+
+  .l-get {
+    padding: 96px 16px 112px;
+  }
+
+  .l-foot__cols {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* 17. Motion ------------------------------------------------------------ */
+
+/* Apple's rule for motion: it has to keep you oriented, answer what you did,
+   or teach the interface, and it must feel physical. So every animation here
+   does one of those jobs, moves only transform and opacity, and runs on the
+   spring curves defined in the tokens. With Reduce Motion on, all of it
+   switches off (last block of this file). */
+
+/* Changing screens. The browser keeps the old screen, draws the new one and
+   animates between them (cross-document view transitions: Chrome and Edge
+   126+, Safari 18.2+; elsewhere it is a normal page load). The old screen
+   fades out to the right while the new one slides in from the left. The top
+   bar and the bottom navigation have names, so they stay still while only
+   the content moves, the way a tab bar does on iOS. */
+@view-transition {
+  navigation: auto;
+}
+
+.w-topbar {
+  view-transition-name: topbar;
+}
+
+.w-nav {
+  view-transition-name: nav;
+}
+
+::view-transition-old(root) {
+  animation: w-out-right 260ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+::view-transition-new(root) {
+  animation: w-in-left 600ms var(--spring-smooth) 80ms both;
+}
+
+@keyframes w-out-right {
+  to {
+    opacity: 0;
+    transform: translateX(64px);
+  }
+}
+
+@keyframes w-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-64px);
+  }
+}
+
+/* The lime pill follows you. The active tab (and the shutter on Scan, which
+   is the active module there) shares one name across pages, so the browser
+   carries it from its old place to the new one on a snappy spring instead of
+   switching it off and on. */
+.w-nav__item[aria-current="page"],
+.w-nav__fab--active {
+  view-transition-name: nav-active;
+}
+
+::view-transition-group(nav-active) {
+  animation-duration: 560ms;
+  animation-timing-function: var(--spring-snappy);
+}
+
+::view-transition-old(nav-active),
+::view-transition-new(nav-active) {
+  height: 100%;
+  animation-duration: 280ms;
+}
+
+/* The shutter. Pressing it pushes the sphere into the surface: it shrinks,
+   its highlight dims and the shade moves inside, so it reads as concave. On
+   release a bouncy spring lifts it back past its rest size and settles.
+   Scan.js plays the whole press with .is-pressed, because the photo is taken
+   on the tap and a quick tap would end :active before anyone sees it. */
+.w-nav__fab {
+  transition: transform var(--dur-settle) var(--spring-bouncy), box-shadow 300ms ease-out;
+}
+
+.w-nav__fab:active {
+  transform: translateY(2px) scale(calc(var(--fab-scale) * 0.88));
+  box-shadow: inset 0 8px 14px rgba(19, 42, 19, 0.55), inset 0 -3px 6px rgba(236, 243, 158, 0.25),
+    0 3px 6px -4px rgba(19, 42, 19, 0.4);
+  transition-duration: 110ms, 110ms;
+  transition-timing-function: ease-out;
+}
+
+.w-nav__fab--active:active {
+  box-shadow: inset 0 8px 14px rgba(19, 42, 19, 0.45), inset 0 -3px 6px rgba(255, 255, 255, 0.55),
+    0 3px 6px -4px rgba(19, 42, 19, 0.4);
+}
+
+.w-nav__fab:active::after {
+  opacity: 0.35;
+}
+
+.w-nav__fab.is-pressed {
+  animation: w-shutter 760ms both;
+}
+
+.w-nav__fab.is-pressed::after {
+  animation: w-shine 760ms both;
+}
+
+@keyframes w-shutter {
+  0% {
+    transform: scale(var(--fab-scale));
+    animation-timing-function: cubic-bezier(0.3, 0, 0.6, 1);
+  }
+
+  18% {
+    transform: translateY(2px) scale(calc(var(--fab-scale) * 0.86));
+    box-shadow: inset 0 8px 14px rgba(19, 42, 19, 0.45), inset 0 -3px 6px rgba(255, 255, 255, 0.55),
+      0 3px 6px -4px rgba(19, 42, 19, 0.4);
+    animation-timing-function: var(--spring-bouncy);
+  }
+
+  100% {
+    transform: scale(var(--fab-scale));
+  }
+}
+
+@keyframes w-shine {
+  18% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes w-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes w-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+@keyframes w-fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* Taking the photo. A short white flash says "got it". While we look, the
+   four corners close in and breathe, like the camera locking focus. Scan.js
+   adds .is-looking and removes it if the answer fails. */
+.w-viewfinder::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--paper);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.w-viewfinder.is-looking::after {
+  animation: w-flash 450ms ease-out;
+}
+
+@keyframes w-flash {
+  from {
+    opacity: 0.8;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.w-bracket--tl { --bx: 1; --by: 1; }
+.w-bracket--tr { --bx: -1; --by: 1; }
+.w-bracket--bl { --bx: 1; --by: -1; }
+.w-bracket--br { --bx: -1; --by: -1; }
+
+.is-looking .w-bracket {
+  animation: w-focus 1.1s ease-in-out infinite alternate;
+}
+
+@keyframes w-focus {
+  from {
+    transform: translate(calc(var(--bx) * 12px), calc(var(--by) * 12px));
+  }
+
+  to {
+    transform: translate(calc(var(--bx) * 22px), calc(var(--by) * 22px));
+  }
+}
+
+/* The answer arrives in order: the category pops in, then the confidence
+   bar fills to its value. Bars grow with scaleX, never width. */
+.w-tile--dark .w-chip {
+  animation: w-pop var(--dur-move) var(--spring-bouncy) 120ms both;
+}
+
+.w-meter__fill {
+  transform-origin: left center;
+  animation: w-fill var(--dur-settle) var(--spring-smooth) 220ms both;
+}
+
+/* Badges arrive one after another (profile.js sets --i); the unlocked ones
+   with a little bounce, because they are a reward. */
+.w-badge__disc {
+  animation: w-rise var(--dur-move) var(--spring-smooth) both;
+  animation-delay: calc(var(--i, 0) * 60ms + 250ms);
+}
+
+.w-badge--on .w-badge__disc {
+  animation-name: w-pop;
+  animation-timing-function: var(--spring-bouncy);
+}
+
+/* History cards settle in, capped so a long list never waits. */
+.w-history-list > li {
+  animation: w-rise var(--dur-move) var(--spring-smooth) both;
+  animation-delay: min(calc(var(--i, 0) * 45ms), 360ms);
+}
+
+/* A folding tile: what was hidden slides down out of its head. */
+.w-fold[open] > :not(summary) {
+  animation: w-drop var(--dur-move) var(--spring-smooth) both;
+}
+
+@keyframes w-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+/* Dialogs rise into place over a fading backdrop, like an iOS sheet. */
+.w-modal[open] {
+  animation: w-sheet-in var(--dur-move) var(--spring-snappy) both;
+}
+
+.w-modal[open]::backdrop {
+  animation: w-fade-in 250ms ease-out both;
+}
+
+@keyframes w-sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+  }
+}
+
+@keyframes w-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Landing: the hero lines arrive one after the other... */
+.l-hero__title,
+.l-hero .l-lead,
+.l-hero .l-actions {
+  animation: w-rise 700ms var(--spring-smooth) both;
+}
+
+.l-hero .l-lead {
+  animation-delay: 90ms;
+}
+
+.l-hero .l-actions {
+  animation-delay: 180ms;
+}
+
+/* ...and the phone grows to full size as it scrolls into view, the way
+   Apple's product pages bring the device forward. Only where scroll-driven
+   animations exist; elsewhere it is simply there. */
+@supports (animation-timeline: view()) {
+  .l-shot--hero {
+    animation: l-forward linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 45%;
+  }
+
+  @keyframes l-forward {
+    from {
+      opacity: 0.4;
+      transform: scale(0.86) translateY(40px);
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  * {
+  *,
+  *::before,
+  *::after,
+  *::backdrop {
     transition: none !important;
+    animation: none !important;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }

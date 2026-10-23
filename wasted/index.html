@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="css/wasted.css">
 </head>
 
-<body>
+<body class="w-bare">
   <a class="w-skip" href="#main">Skip to content</a>
 
   <div class="container">
@@ -119,29 +119,6 @@
   </dialog>
 
   <script src="js/viewport-tip.js"></script>
-
-  <!-- Reusable component: bottom navigation. Two secondary modules in the
-       pill, the only real action as the sphere on the right. Identical block on
-       every screen; only aria-current moves. -->
-  <nav class="w-nav" aria-label="Main">
-    <ul class="w-nav__pill">
-      <li>
-        <a class="w-nav__item" href="profile.html" aria-label="Profile">
-          <svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-user"/></svg>
-          <span aria-hidden="true">Profile</span>
-        </a>
-      </li>
-      <li>
-        <a class="w-nav__item" href="history.html" aria-label="History">
-          <svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-history"/></svg>
-          <span aria-hidden="true">History</span>
-        </a>
-      </li>
-    </ul>
-    <a class="w-nav__fab" href="scan.html" aria-label="Scan">
-      <svg class="w-i" aria-hidden="true" focusable="false"><use href="#i-camera"/></svg>
-    </a>
-  </nav>
 
 </body>
 

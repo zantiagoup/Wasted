@@ -19,6 +19,7 @@ observations and the privacy decisions, is `entregables/wasted_FixedProposal.pdf
 
 | File | Screen | What it is |
 |---|---|---|
+| `wasted/landing.html` | Landing | A product page for computers: hero, two feature tiles, the authorised drop-off points, the way in and a footer. Its screenshots are real captures of the app. "Get the app" opens Set up, and `/` redirects here. |
 | `wasted/index.html` | Set up | Runs once. Asks for the city and the two permissions. Nothing works without a city: every rule and every drop-off point depends on it. Also carries the desktop notice below. |
 | `wasted/scan.html` | Scan | The app itself. Viewfinder plus two alternate entrances for when there is no photo. The round button in the bar is the shutter here. |
 | `wasted/result.html` | Result | Material, category, confidence, preparation, map preview and route. Not a menu item: it is a screen shared by Scan and History. |
@@ -50,15 +51,15 @@ match against.
 - One external stylesheet, `wasted/css/wasted.css`, holding every reusable element:
   bottom navigation, tile, chip, button, form field, permission switch, history entry,
   viewfinder, map box, notice.
-- Colour comes only from `design-system/DESIGN_SYSTEM.md`: five greens and white. No support
-  colour, no neutral grey.
+- Colour comes only from `design-system/DESIGN_SYSTEM.md`: six tones on one
+  green axis, and each surface always takes the same text colour (see the pairings table there).
 
 ### Three rules the layout follows
 
 **Nothing is outlined.** Groups are drawn with a contrasting surface instead of a border, and
-every pairing passes WCAG AA: lime with forest text (13.07), forest with lime (13.07), and moss
-with white (5.24), which is reserved for notices. Moss as a surface is the one addition we made
-to the design system; everything else was already documented.
+every pairing passes WCAG AA: mist with forest text (13.49), forest with lime (13.07), lime with
+forest for small accents (13.07), and moss with white (5.24), which is reserved for notices. Lime is
+never a large background: it tires the eye.
 
 **Notices look like notices.** Anything that is a caveat rather than content sits on moss with
 an info icon, so a disclaimer can never be mistaken for an answer.
@@ -76,8 +77,8 @@ highlight. Pressing it drops the cast shadow and deepens the inner shade. All fo
 from the palette.
 
 On Scan the sphere is the shutter rather than a link elsewhere, so it grows by a quarter and
-flips: light greens with a forest icon instead of dark greens with a lime one. Forest on sage
-is 5.84 and on lime 13.07, both AA. The scale lives in a `--fab-scale` variable so hover and
+flips: light greens with a forest icon instead of dark greens with a lime one. Forest on lime
+is 13.07, AAA. The scale lives in a `--fab-scale` variable so hover and
 press compose with it instead of overwriting the transform, and a small left margin buys back
 the width the scale eats out of the gap next to the pill.
 
@@ -140,6 +141,10 @@ cp .env.example .env   # then paste the key after GEMINI_API_KEY=
 npm start
 # then open http://localhost:3000/wasted/
 ```
+
+Without a key the server still runs in **demo mode**: `services/demo-service.js` answers every scan
+with one of five sample items (a typed description picks the matching one), and the Result screen
+says it is a demo answer. This lets the whole flow be tested without Gemini.
 
 GitHub Pages only serves static files, so the published site shows the screens but cannot scan:
 scanning needs this server running.
